@@ -55,6 +55,9 @@ forever:
  	jmp forever
 
 print_str:
+	pha
+	tya
+	pha
  	ldy #$00        ; Switched to y, bc we need indexed addressing mode
 
 print_loop:
@@ -65,6 +68,9 @@ print_loop:
  	bne print_loop
 
 print_done:
+	pla
+	tax
+	pla
  	rts
 
 clr_scr:
