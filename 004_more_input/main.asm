@@ -10,12 +10,11 @@
 start:
 	lda #WHITE
 	sta CUR_COLOR  
-
-prepare_text:
 	jsr clr_scr
 
-	ldx #$01
-	ldy #$00
+prepare_text:
+	ldx text_row
+	ldy text_col
 	clc
 	jsr PLOT
 
@@ -52,5 +51,11 @@ exit_prog:
 message:
  	.text "H"
  	.byte 0
+
+text_row:
+ 	.byte $0A
+
+text_col:
+ 	.byte $0A
 
 .include 'subroutines.asm'
