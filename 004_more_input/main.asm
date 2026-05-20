@@ -88,7 +88,7 @@ move_left:
 
 move_right:
 	lda text_col
-	cmp #$27
+	cmp #$28 - (end_msg - message) + 1
 	beq loop
 	inc text_col
 	jmp prepare_text
@@ -104,8 +104,9 @@ exit_prog:
         rts
 
 message:
- 	.text "H"
+ 	.text "HELLO"
  	.byte 0
+end_msg:
 
 text_row:
  	.byte $0A
