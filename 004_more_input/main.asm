@@ -34,6 +34,12 @@ loop:
 
         cmp #M_KEY
         beq change_text_color
+
+        cmp #B_KEY
+        beq change_border_color
+
+        cmp #S_KEY
+        beq change_bg_color
         
         jmp loop
 
@@ -41,11 +47,23 @@ change_text_color:
 	inc CUR_COLOR
 	jmp prepare_text
 
+change_border_color:
+	inc BORDER_COLOR
+	jmp loop
+
+change_bg_color:
+	inc BG_COLOR
+	jmp loop
+
 
 exit_prog:
 	jsr clr_scr
 	lda #WHITE
 	sta CUR_COLOR  
+	lda #LIGHT_BLUE
+	sta BORDER_COLOR
+	lda #BLUE
+	sta BG_COLOR
         rts
 
 message:
