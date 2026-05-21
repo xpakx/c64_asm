@@ -26,15 +26,12 @@ print_player:
 	lda #$30
  	jsr CHROUT
 
-loop:
+get_key:
         jsr GETIN
-        beq loop
+        beq get_key
         
         cmp #Q_KEY
         beq exit_prog
-
-        cmp #SPACE_KEY
-        beq start_game
 
         cmp #UP_KEY
         beq move_up
@@ -48,35 +45,36 @@ loop:
         cmp #RIGHT_KEY
         beq move_right
         
-        jmp loop
-
-start_game:
-	jmp print_player
+        jmp get_key
 
 move_up:
 	lda player_row
-	beq loop
+	beq get_key
 	dec player_row
-	jmp print_player
+	jmp turn
 
 move_down:
 	lda player_row
 	cmp #$18
-	beq loop
+	beq get_key
 	inc player_row
-	jmp print_player
+	jmp turn
 
 move_left:
 	lda player_col
-	beq loop
+	beq get_key
 	dec player_col
-	jmp print_player
+	jmp turn
 
 move_right:
 	lda player_col
 	cmp #$27
-	beq loop
+	beq get_key
 	inc player_col
+	jmp turn
+
+turn:
+	; TODO
 	jmp print_player
 
 exit_prog:
@@ -89,10 +87,11 @@ exit_prog:
 	sta BG_COLOR
         rts
 
+.include 'subroutines.asm'
+
 player_row:
  	.byte $0A
 
 player_col:
  	.byte $0A
 
-.include 'subroutines.asm'
