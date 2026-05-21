@@ -32,7 +32,7 @@ print_enemies:
 	lda #RED
 	sta CUR_COLOR  
 
-enemies_loop
+enemies_loop:
 	lda enemies,x
 	cmp #$FF            ; end-of-list marker ($FF)
 	beq end_enemies_loop
@@ -58,7 +58,7 @@ enemies_loop
 	inx
  	bne enemies_loop
 
-end_enemies_loop
+end_enemies_loop:
 
 get_key:
         jsr GETIN
@@ -85,6 +85,10 @@ move_up:
 	lda player_row
 	beq get_key
 	dec player_row
+
+	jsr detect_collisions
+	beq turn
+	inc player_row
 	jmp turn
 
 move_down:
@@ -92,12 +96,18 @@ move_down:
 	cmp #$18
 	beq get_key
 	inc player_row
+	jsr detect_collisions
+	beq turn
+	dec player_row
 	jmp turn
 
 move_left:
 	lda player_col
 	beq get_key
 	dec player_col
+	jsr detect_collisions
+	beq turn
+	inc player_col
 	jmp turn
 
 move_right:
@@ -105,6 +115,9 @@ move_right:
 	cmp #$27
 	beq get_key
 	inc player_col
+	jsr detect_collisions
+	beq turn
+	dec player_col
 	jmp turn
 
 turn:
@@ -120,6 +133,31 @@ exit_prog:
 	lda #BLUE
 	sta BG_COLOR
         rts
+
+detect_collisions:
+ 	ldx #$00
+
+collision_loop:
+	lda enemies,x
+	cmp #$FF            ; end-of-list marker ($FF)
+	beq end_collision_loop
+
+	cmp player_row
+	bne no_collision
+	lda enemies+1,x
+	cmp player_col
+	bne no_collision
+	lda #$FF
+	rts
+no_collision:
+ 	inx
+	inx
+ 	bne collision_loop
+
+end_collision_loop:
+	lda #$00
+	rts
+	
 
 .include 'subroutines.asm'
 
