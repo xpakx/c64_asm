@@ -8,8 +8,6 @@
 *= $0810 
 
 start:
-	lda #GREEN
-	sta CUR_COLOR  
 	lda #RED
 	sta BORDER_COLOR
 	lda #BLACK
@@ -18,6 +16,9 @@ start:
 print_player:
 	jsr clr_scr
 
+	lda #GREEN
+	sta CUR_COLOR  
+
 	ldx player_row
 	ldy player_col
 	clc
@@ -25,6 +26,39 @@ print_player:
 
 	lda #$30
  	jsr CHROUT
+
+print_enemies:
+ 	ldx #$00
+	lda #RED
+	sta CUR_COLOR  
+
+enemies_loop
+	lda enemies,x
+	cmp #$FF            ; end-of-list marker ($FF)
+	beq end_enemies_loop
+
+
+	txa
+	pha
+
+	ldy enemies+1,x
+	lda enemies,x
+	tax
+
+	clc
+	jsr PLOT
+
+	pla
+	tax
+
+	lda #$30
+ 	jsr CHROUT
+
+ 	inx
+	inx
+ 	bne enemies_loop
+
+end_enemies_loop
 
 get_key:
         jsr GETIN
@@ -95,3 +129,9 @@ player_row:
 player_col:
  	.byte $0A
 
+enemies:
+ 	.byte $0
+ 	.byte $0
+ 	.byte $05
+ 	.byte $05
+	.byte $FF
