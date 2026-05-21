@@ -69,3 +69,14 @@ W_KEY     = $57
 X_KEY     = $58
 Y_KEY     = $59
 Z_KEY     = $5A
+
+KEY_0     = $30
+KEY_1     = $31
+KEY_2     = $32
+KEY_3     = $33
+KEY_4     = $34
+KEY_5     = $35
+KEY_6     = $36
+KEY_7     = $37
+KEY_8     = $38
+KEY_9     = $39

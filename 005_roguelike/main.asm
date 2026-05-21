@@ -24,7 +24,7 @@ print_player:
 	clc
 	jsr PLOT
 
-	lda #$30
+	lda #KEY_0
  	jsr CHROUT
 
 print_enemies:
@@ -51,7 +51,7 @@ enemies_loop:
 	pla
 	tax
 
-	lda #$30
+	lda #KEY_0
  	jsr CHROUT
 
  	inx
