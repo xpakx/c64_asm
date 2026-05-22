@@ -12,6 +12,9 @@ BORDER_COLOR = $D020
 BG_COLOR = $D021
 
 STR_PTR = $FB      
+LOW_TIME  = $A0
+MID_TIME  = $A1
+HIGH_TIME = $A2
 
 ; ---------
 ; Colors

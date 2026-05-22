@@ -13,7 +13,7 @@ start:
 	lda #BLACK
 	sta BG_COLOR
 
-	lda $A0
+	lda #LOW_TIME
 	clc
 	adc #30
 	sta target_time
@@ -40,7 +40,7 @@ get_key:
         beq exit_prog
 
 check_timer:
-	lda $A0            ; Load clock
+	lda #LOW_TIME            ; Load clock
     	sec
     	sbc target_time
     	cmp #30            ; 30 jiffies
