@@ -45,14 +45,11 @@ check_timer:
 	cmp #30
     	bcc get_key
 
-    	; --- 30 jiffies have passed ---
-    	inc player_row
     	
     	; Update target_time
 	lda LOW_TIME
 	sta last_time 
-
-    	jmp print_player
+	jmp move_down
 
 exit_prog:
 	jsr clr_scr
@@ -63,7 +60,34 @@ exit_prog:
 	lda #BLUE
 	sta BG_COLOR
         rts
-	
+
+
+move_up:
+	lda player_row
+	beq get_key
+	dec player_row
+	jmp print_player
+
+move_down:
+	lda player_row
+	cmp #$18
+	beq get_key
+	inc player_row
+	jmp print_player
+
+move_left:
+	lda player_col
+	beq get_key
+	dec player_col
+	jmp print_player
+
+move_right:
+	lda player_col
+	cmp #$27
+	beq get_key
+	inc player_col
+	jmp print_player
+
 
 .include 'subroutines.asm'
 
