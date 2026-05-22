@@ -13,10 +13,9 @@ start:
 	lda #BLACK
 	sta BG_COLOR
 
-	lda #LOW_TIME
-	clc
-	adc #30
-	sta target_time
+	lda LOW_TIME
+	sta last_time
+	cli
 
 print_player:
 	jsr clr_scr
@@ -40,20 +39,18 @@ get_key:
         beq exit_prog
 
 check_timer:
-	lda #LOW_TIME            ; Load clock
-    	sec
-    	sbc target_time
-    	cmp #30            ; 30 jiffies
+	sec
+	lda LOW_TIME            ; Load clock
+    	sbc last_time
+	cmp #30
     	bcc get_key
 
     	; --- 30 jiffies have passed ---
     	inc player_row
     	
     	; Update target_time
-	clc
-	lda target_time
-	adc #30
-	sta target_time 
+	lda LOW_TIME
+	sta last_time 
 
     	jmp print_player
 
@@ -83,5 +80,5 @@ segments:
  	.byte $05
 	.byte $FF
 
-target_time:
-	.byte 0
+last_time:
+	.byte 30
