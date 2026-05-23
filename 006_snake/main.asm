@@ -31,6 +31,39 @@ print_player:
 	lda #KEY_0
  	jsr CHROUT
 
+print_segments:
+ 	ldx #$00
+	lda #LIGHT_GREEN
+	sta CUR_COLOR  
+
+segments_loop:
+	cpx segments_len
+	beq end_segments_loop
+
+	txa
+	pha
+
+	asl
+	tax
+	ldy segments+1,x
+	lda segments,x
+	tax
+
+	clc
+	jsr PLOT
+
+	pla
+	tax
+
+	lda #KEY_0
+ 	jsr CHROUT
+
+ 	inx
+ 	bne segments_loop
+
+end_segments_loop:
+
+
 get_key:
         jsr GETIN
         beq check_timer
@@ -84,26 +117,29 @@ move_up:
 	lda player_row
 	beq get_key
 	dec player_row
-	jmp print_player
+	jmp move_segments
 
 move_down:
 	lda player_row
 	cmp #$18
 	beq get_key
 	inc player_row
-	jmp print_player
+	jmp move_segments
 
 move_left:
 	lda player_col
 	beq get_key
 	dec player_col
-	jmp print_player
+	jmp move_segments
 
 move_right:
 	lda player_col
 	cmp #$27
 	beq get_key
 	inc player_col
+	jmp move_segments
+
+move_segments:
 	jmp print_player
 
 auto_move:
@@ -175,12 +211,16 @@ player_row:
 player_col:
  	.byte $0A
 
+segments_len:
+	.byte 1
 segments:
- 	.byte $0
- 	.byte $0
- 	.byte $05
- 	.byte $05
-	.byte $FF
+ 	.byte $09
+ 	.byte $0A
+ 	.byte $08
+ 	.byte $0A
+ 	.byte $07
+ 	.byte $0A
+
 
 last_time:
 	.byte 30
