@@ -107,7 +107,8 @@ move_right:
 	jmp print_player
 
 auto_move:
-	lda direction
+	lda next_dir
+	sta direction
 	cmp #%00000001
 	beq move_down
 	cmp #%00000010
@@ -127,7 +128,7 @@ dir_up:
 	rts
 set_dir_up:
 	lda #%00000010
-	sta direction
+	sta next_dir
 	rts
 
 dir_down:
@@ -137,7 +138,7 @@ dir_down:
 	rts
 set_dir_down:
 	lda #%00000001
-	sta direction
+	sta next_dir
 	rts
 
 dir_left:
@@ -147,7 +148,7 @@ dir_left:
 	rts
 set_dir_left:
 	lda #%00000100
-	sta direction
+	sta next_dir
 	rts
 
 dir_right:
@@ -157,7 +158,7 @@ dir_right:
 	rts
 set_dir_right:
 	lda #%00001000
-	sta direction
+	sta next_dir
 	rts
 
 
@@ -165,6 +166,8 @@ set_dir_right:
 
 direction:
 	.byte %00000001   ;last bit is down, then up, left, right
+next_dir:
+	.byte %00000001
 
 player_row:
  	.byte $0A
