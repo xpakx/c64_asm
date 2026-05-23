@@ -39,13 +39,20 @@ get_key:
         beq exit_prog
 
         cmp #UP_KEY
-        beq dir_up
+	bne test_down
+        jsr dir_up
+test_down:
         cmp #DOWN_KEY
-        beq dir_down
+	bne test_left
+        jsr dir_down
+test_left:
         cmp #LEFT_KEY
-        beq dir_left
+	bne test_right
+        jsr dir_left
+test_right:
         cmp #RIGHT_KEY
-        beq dir_right
+	bne check_timer
+        jsr dir_right
 
 check_timer:
 	sec
@@ -99,24 +106,6 @@ move_right:
 	inc player_col
 	jmp print_player
 
-
-dir_up:
-	lda #%00000010
-	sta direction
-	jmp check_timer
-dir_down:
-	lda #%00000001
-	sta direction
-	jmp check_timer
-dir_left:
-	lda #%00000100
-	sta direction
-	jmp check_timer
-dir_right:
-	lda #%00001000
-	sta direction
-	jmp check_timer
-
 auto_move:
 	lda direction
 	cmp #%00000001
@@ -129,6 +118,47 @@ auto_move:
 	beq move_right
 
 	jmp move_down
+
+
+dir_up:
+	lda direction
+	cmp #%00000001
+	bne set_dir_up
+	rts
+set_dir_up:
+	lda #%00000010
+	sta direction
+	rts
+
+dir_down:
+	lda direction
+	cmp #%00000010
+	bne set_dir_down
+	rts
+set_dir_down:
+	lda #%00000001
+	sta direction
+	rts
+
+dir_left:
+	lda direction
+	cmp #%00001000
+	bne set_dir_left
+	rts
+set_dir_left:
+	lda #%00000100
+	sta direction
+	rts
+
+dir_right:
+	lda direction
+	cmp #%00000100
+	bne set_dir_right
+	rts
+set_dir_right:
+	lda #%00001000
+	sta direction
+	rts
 
 
 .include 'subroutines.asm'
