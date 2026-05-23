@@ -39,13 +39,13 @@ get_key:
         beq exit_prog
 
         cmp #UP_KEY
-        beq move_up
+        beq dir_up
         cmp #DOWN_KEY
-        beq move_down
+        beq dir_down
         cmp #LEFT_KEY
-        beq move_left
+        beq dir_left
         cmp #RIGHT_KEY
-        beq move_right
+        beq dir_right
 
 check_timer:
 	sec
@@ -58,7 +58,9 @@ check_timer:
     	; Update target_time
 	lda LOW_TIME
 	sta last_time 
-	jmp move_down
+
+	jmp auto_move
+
 
 exit_prog:
 	jsr clr_scr
@@ -98,7 +100,41 @@ move_right:
 	jmp print_player
 
 
+dir_up:
+	lda #%00000010
+	sta direction
+	jmp check_timer
+dir_down:
+	lda #%00000001
+	sta direction
+	jmp check_timer
+dir_left:
+	lda #%00000100
+	sta direction
+	jmp check_timer
+dir_right:
+	lda #%00001000
+	sta direction
+	jmp check_timer
+
+auto_move:
+	lda direction
+	cmp #%00000001
+	beq move_down
+	cmp #%00000010
+	beq move_up
+	cmp #%00000100
+	beq move_left
+	cmp #%00001000
+	beq move_right
+
+	jmp move_down
+
+
 .include 'subroutines.asm'
+
+direction:
+	.byte %00000001   ;last bit is down, then up, left, right
 
 player_row:
  	.byte $0A
