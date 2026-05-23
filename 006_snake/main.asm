@@ -38,6 +38,15 @@ get_key:
         cmp #Q_KEY
         beq exit_prog
 
+        cmp #UP_KEY
+        beq move_up
+        cmp #DOWN_KEY
+        beq move_down
+        cmp #LEFT_KEY
+        beq move_left
+        cmp #RIGHT_KEY
+        beq move_right
+
 check_timer:
 	sec
 	lda LOW_TIME            ; Load clock
