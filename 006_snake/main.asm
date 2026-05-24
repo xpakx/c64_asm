@@ -31,37 +31,7 @@ print_player:
 	lda #KEY_0
  	jsr CHROUT
 
-print_segments:
- 	ldx #$00
-	lda #LIGHT_GREEN
-	sta CUR_COLOR  
-
-segments_loop:
-	cpx segments_len
-	beq end_segments_loop
-
-	txa
-	pha
-
-	asl
-	tax
-	ldy segments+1,x
-	lda segments,x
-	tax
-
-	clc
-	jsr PLOT
-
-	pla
-	tax
-
-	lda #KEY_0
- 	jsr CHROUT
-
- 	inx
- 	bne segments_loop
-
-end_segments_loop:
+	jsr print_segments
 
 
 get_key:
@@ -140,33 +110,7 @@ move_right:
 	jmp print_player
 
 auto_move:
- 	ldx segments_len
-	dex
-
-move_loop:
-	txa
-	pha
-
-	asl
-	tax
-
-	lda segments-2,x
-	sta segments,x
-	lda segments-1,x
-	sta segments+1,x
-
-	pla
-	tax
-
- 	dex
-	cpx #$00
- 	bne move_loop
-
-move_first_seg:
-	lda player_row
-	sta segments
-	lda player_col
-	sta segments+1
+	jsr move_segments
 
 move_head:
 	lda next_dir
@@ -222,6 +166,7 @@ set_death_flag:
 
 
 .include 'subroutines.asm'
+.include 'segments.asm'
 
 direction:
 	.byte %00000001   ;last bit is down, then up, left, right
