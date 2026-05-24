@@ -117,29 +117,26 @@ move_up:
 	lda player_row
 	beq get_key
 	dec player_row
-	jmp move_segments
+	jmp print_player
 
 move_down:
 	lda player_row
 	cmp #$18
 	beq get_key
 	inc player_row
-	jmp move_segments
+	jmp print_player
 
 move_left:
 	lda player_col
 	beq get_key
 	dec player_col
-	jmp move_segments
+	jmp print_player
 
 move_right:
 	lda player_col
 	cmp #$27
 	beq get_key
 	inc player_col
-	jmp move_segments
-
-move_segments:
 	jmp print_player
 
 auto_move:
