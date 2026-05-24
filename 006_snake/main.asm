@@ -143,6 +143,35 @@ move_segments:
 	jmp print_player
 
 auto_move:
+ 	ldx segments_len
+	dex
+
+move_loop:
+	txa
+	pha
+
+	asl
+	tax
+
+	lda segments-2,x
+	sta segments,x
+	lda segments-1,x
+	sta segments+1,x
+
+	pla
+	tax
+
+ 	dex
+	cpx #$00
+ 	bne move_loop
+
+move_first_seg:
+	lda player_row
+	sta segments
+	lda player_col
+	sta segments+1
+
+move_head:
 	lda next_dir
 	sta direction
 	cmp #%00000001
@@ -212,7 +241,7 @@ player_col:
  	.byte $0A
 
 segments_len:
-	.byte 1
+	.byte 3
 segments:
  	.byte $09
  	.byte $0A
