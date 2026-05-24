@@ -240,6 +240,9 @@ player_row:
 player_col:
  	.byte $0A
 
+last_time:
+	.byte 30
+
 segments_len:
 	.byte 3
 segments:
@@ -249,7 +252,3 @@ segments:
  	.byte $0A
  	.byte $07
  	.byte $0A
-
-
-last_time:
-	.byte 30
