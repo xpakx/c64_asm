@@ -186,9 +186,7 @@ move_head:
 dir_up:
 	lda direction
 	cmp #%00000001
-	bne set_dir_up
-	rts
-set_dir_up:
+	beq set_death_flag
 	lda #%00000010
 	sta next_dir
 	rts
@@ -196,9 +194,7 @@ set_dir_up:
 dir_down:
 	lda direction
 	cmp #%00000010
-	bne set_dir_down
-	rts
-set_dir_down:
+	beq set_death_flag
 	lda #%00000001
 	sta next_dir
 	rts
@@ -206,9 +202,7 @@ set_dir_down:
 dir_left:
 	lda direction
 	cmp #%00001000
-	bne set_dir_left
-	rts
-set_dir_left:
+	beq set_death_flag
 	lda #%00000100
 	sta next_dir
 	rts
@@ -216,11 +210,14 @@ set_dir_left:
 dir_right:
 	lda direction
 	cmp #%00000100
-	bne set_dir_right
-	rts
-set_dir_right:
+	beq set_death_flag
 	lda #%00001000
 	sta next_dir
+	rts
+
+set_death_flag:
+	lda #%01
+	sta death_flag
 	rts
 
 
@@ -239,6 +236,9 @@ player_col:
 
 last_time:
 	.byte 30
+
+death_flag:
+	.byte %0
 
 segments_len:
 	.byte 3
