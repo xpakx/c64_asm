@@ -160,7 +160,7 @@ move_head:
 dir_up:
 	lda direction
 	cmp #%00000001
-	beq set_death_flag
+	beq return_dir
 	lda #%00000010
 	sta next_dir
 	rts
@@ -168,7 +168,7 @@ dir_up:
 dir_down:
 	lda direction
 	cmp #%00000010
-	beq set_death_flag
+	beq return_dir
 	lda #%00000001
 	sta next_dir
 	rts
@@ -176,7 +176,7 @@ dir_down:
 dir_left:
 	lda direction
 	cmp #%00001000
-	beq set_death_flag
+	beq return_dir
 	lda #%00000100
 	sta next_dir
 	rts
@@ -184,9 +184,12 @@ dir_left:
 dir_right:
 	lda direction
 	cmp #%00000100
-	beq set_death_flag
+	beq return_dir
 	lda #%00001000
 	sta next_dir
+	rts
+
+return_dir:
 	rts
 
 set_death_flag:
