@@ -20,8 +20,16 @@ start:
 print_player:
 	jsr clr_scr
 
+
 	lda #GREEN
 	sta CUR_COLOR  
+
+	lda death_flag
+	cmp #%01
+	bne print_test
+	lda #RED
+	sta CUR_COLOR  
+print_test:
 
 	ldx player_row
 	ldy player_col
@@ -46,7 +54,8 @@ print_food:
  	jsr CHROUT
 
 collision_logic:
-	jsr check_collision
+	jsr check_collision_apple
+	jsr check_collision_snake
 
 get_key:
         jsr GETIN
