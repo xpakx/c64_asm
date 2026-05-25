@@ -33,6 +33,20 @@ print_player:
 
 	jsr print_segments
 
+print_food:
+	lda #RED
+	sta CUR_COLOR  
+
+	ldx apple_row
+	ldy apple_col
+	clc
+	jsr PLOT
+
+	lda #KEY_0
+ 	jsr CHROUT
+
+collision_logic:
+	jsr check_collision
 
 get_key:
         jsr GETIN
@@ -174,6 +188,7 @@ set_death_flag:
 
 .include 'subroutines.asm'
 .include 'segments.asm'
+.include 'collisions.asm'
 
 direction:
 	.byte %00000001   ;last bit is down, then up, left, right
@@ -185,6 +200,11 @@ player_row:
 
 player_col:
  	.byte $0A
+
+apple_row:
+ 	.byte $0F
+apple_col:
+ 	.byte $0F
 
 last_time:
 	.byte 30
