@@ -40,6 +40,8 @@ get_key:
         
         cmp #Q_KEY
         beq exit_prog
+        cmp #G_KEY
+        beq set_grow_flag
 
         cmp #UP_KEY
 	bne test_down
@@ -81,6 +83,11 @@ exit_prog:
 	lda #BLUE
 	sta BG_COLOR
         rts
+
+set_grow_flag:
+	lda #%01
+	sta grow_flag
+	jmp get_key
 
 
 move_up:
@@ -183,6 +190,8 @@ last_time:
 	.byte 30
 
 death_flag:
+	.byte %0
+grow_flag:
 	.byte %0
 
 segments_len:

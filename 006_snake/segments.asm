@@ -39,6 +39,17 @@ end_segments_loop:
 ; Moving Segments
 ; ---------------
 move_segments:
+	lda grow_flag
+	cmp #%01
+	bne prepare_iterator
+
+	lda #%00
+	sta grow_flag
+
+	lda segments_len
+	inc segments_len
+
+prepare_iterator:
  	ldx segments_len
 	dex
 
