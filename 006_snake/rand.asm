@@ -1,4 +1,7 @@
-; using SID chip for random number
+; -----------------
+; Initializing rand
+; (uses SID chip)
+; -----------------
 init_rand:
 	lda #$FF
 	sta $D40E
@@ -7,10 +10,16 @@ init_rand:
 	sta $D412
 	rts
 
+; ------------------------
+; generating random number
+; ------------------------
 get_rand:
 	lda $D41B
 	rts
 
+; -------------------------------
+; moving apple to random position
+; -------------------------------
 generate_apple:
 	lda $D41B
 	and #$3F
