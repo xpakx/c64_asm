@@ -30,8 +30,7 @@ print_player:
 	lda death_flag
 	cmp #%01
 	bne print_test
-	lda #RED
-	sta CUR_COLOR  
+	jmp reset
 print_test:
 
 	ldx player_row
@@ -200,6 +199,30 @@ dir_right:
 
 return_dir:
 	rts
+
+reset:
+	lda #$03
+	sta segments_len
+	lda #$0A
+	sta player_row
+	sta player_col
+	sta segments+1
+	sta segments+3
+	sta segments+5
+	lda #$09
+	sta segments
+	lda #$08
+	sta segments+2
+	lda #$07
+	sta segments+4
+	lda #$00
+	sta death_flag
+	sta grow_flag
+	lda #%00000001
+	sta direction
+	sta next_dir
+	jsr generate_apple
+	jmp print_player
 
 
 .include 'subroutines.asm'
