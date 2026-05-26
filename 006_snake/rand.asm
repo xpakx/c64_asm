@@ -10,3 +10,21 @@ init_rand:
 get_rand:
 	lda $D41B
 	rts
+
+generate_apple:
+    ; column
+    lda $D41B
+    and #$3F
+    ; TODO: maybe better to just decrement instead of rerolling?
+    cmp #40
+    bcs generate_apple
+    sta apple_col
+    
+    ; row
+rand_row:
+    lda $D41B
+    and #$1F
+    cmp #25
+    bcs rand_row
+    sta apple_row
+    rts

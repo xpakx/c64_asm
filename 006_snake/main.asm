@@ -15,6 +15,9 @@ start:
 
 	lda LOW_TIME
 	sta last_time
+
+	jsr init_rand
+	jsr generate_apple
 	cli
 
 print_player:
