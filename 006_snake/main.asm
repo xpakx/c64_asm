@@ -202,6 +202,7 @@ return_dir:
 .include 'subroutines.asm'
 .include 'segments.asm'
 .include 'collisions.asm'
+.include 'rand.asm'
 
 direction:
 	.byte %00000001   ;last bit is down, then up, left, right
