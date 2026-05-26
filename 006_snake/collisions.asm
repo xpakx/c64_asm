@@ -11,6 +11,7 @@ check_collision_apple:
 
 	lda #%01
 	sta grow_flag
+	jsr generate_apple
 
 finish_collision:
 	rts
