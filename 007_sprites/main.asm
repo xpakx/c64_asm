@@ -8,10 +8,28 @@
 *= $0810 
 
 start:
+	jsr clr_scr
 	lda #RED
 	sta BORDER_COLOR
 	lda #BLACK
 	sta BG_COLOR
+
+prepare_sprite:
+	lda #$80
+	sta SPRITE_0_PTR
+
+	lda #100
+	sta SPRITE_0_X
+	sta SPRITE_0_Y
+
+	lda #0
+	sta SPRITE_MSB
+
+	lda #GREEN
+	sta SPRITE_COL_0
+
+	lda #1
+	sta VIC_ENABLE
 
 program_loop:
 
@@ -25,6 +43,8 @@ get_key:
 	jmp program_loop
 
 exit_prog:
+	lda #0
+	sta VIC_ENABLE
 	jsr clr_scr
 	lda #WHITE
 	sta CUR_COLOR  
@@ -35,3 +55,30 @@ exit_prog:
         rts
 
 .include 'subroutines.asm'
+
+
+
+*= $2000
+sprite_data:
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $AA, $AA, $AA
+    .byte $00
