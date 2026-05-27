@@ -16,7 +16,7 @@ start:
 	lda LOW_TIME
 	sta last_time
 
-	jsr init_rand
+	jsr init_rand_seed
 	jsr generate_apple
 	cli
 

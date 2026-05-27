@@ -10,6 +10,18 @@ init_rand:
 	sta $D412
 	rts
 
+init_rand_seed:
+	lda LOW_TIME
+	bne non_zero_seed
+	lda #$FF
+	sta $D40E
+non_zero_seed:
+	sta $D40E
+	sta $D40F
+	lda #$80
+	sta $D412
+	rts
+
 ; ------------------------
 ; generating random number
 ; ------------------------
