@@ -43,7 +43,43 @@ get_key:
         
         cmp #Q_KEY
         beq exit_prog
+	cmp #UP_KEY
+	beq move_up
+	cmp #DOWN_KEY
+	beq move_down
+	cmp #LEFT_KEY
+	beq move_left
+	cmp #RIGHT_KEY
+	beq move_right
 
+	jmp program_loop
+
+move_up:
+	lda SPRITE_0_Y
+	sec
+	sbc #10
+	sta SPRITE_0_Y
+	jmp program_loop
+
+move_down:
+	lda SPRITE_0_Y
+	clc
+	adc #10
+	sta SPRITE_0_Y
+	jmp program_loop
+
+move_left:
+	lda SPRITE_0_X
+	sec
+	sbc #10
+	sta SPRITE_0_X
+	jmp program_loop
+
+move_right:
+	lda SPRITE_0_X
+	clc
+	adc #10
+	sta SPRITE_0_X
 	jmp program_loop
 
 exit_prog:
