@@ -25,6 +25,10 @@ prepare_sprite:
 	lda #0
 	sta SPRITE_MSB
 
+	lda #1
+	sta HORIZONTAL_EXPAND
+	sta VERTICAL_EXPAND
+
 	lda #GREEN
 	sta SPRITE_COL_0
 
