@@ -39,50 +39,33 @@ get_key:
         
         cmp #Q_KEY
         beq exit_prog
+
+test_up_key:
 	cmp #UP_KEY
-	beq move_up
+	bne test_down_key
+	jsr move_up
+	jmp program_loop
+test_down_key:
 	cmp #DOWN_KEY
-	beq move_down
+	bne test_left_key
+	jsr move_down
+	jmp program_loop
+test_left_key:
 	cmp #LEFT_KEY
-	beq move_left
+	bne test_right_key
+	jsr move_left
+	jmp program_loop
+test_right_key:
 	cmp #RIGHT_KEY
-	beq move_right
-
+	bne test_scale_key
+	jsr move_right
+	jmp program_loop
+test_scale_key:
 	cmp #S_KEY
-	beq scale
-
-	jmp program_loop
-
-move_up:
-	lda SPRITE_0_Y
-	sec
-	sbc #10
-	sta SPRITE_0_Y
-	jmp program_loop
-
-move_down:
-	lda SPRITE_0_Y
-	clc
-	adc #10
-	sta SPRITE_0_Y
-	jmp program_loop
-
-move_left:
-	lda SPRITE_0_X
-	sec
-	sbc #10
-	sta SPRITE_0_X
-	jmp program_loop
-
-move_right:
-	lda SPRITE_0_X
-	clc
-	adc #10
-	sta SPRITE_0_X
-	jmp program_loop
-
-scale:
+	bne after_keys
 	jsr toggle_scale
+	jmp program_loop
+after_keys:
 	jmp program_loop
 
 exit_prog:
@@ -105,6 +88,7 @@ toggle_scale:
 	rts
 
 .include 'subroutines.asm'
+.include 'movement.asm'
 
 
 
