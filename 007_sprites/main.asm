@@ -25,10 +25,6 @@ prepare_sprite:
 	lda #0
 	sta SPRITE_MSB
 
-	lda #1
-	sta HORIZONTAL_EXPAND
-	sta VERTICAL_EXPAND
-
 	lda #GREEN
 	sta SPRITE_COL_0
 
@@ -51,6 +47,9 @@ get_key:
 	beq move_left
 	cmp #RIGHT_KEY
 	beq move_right
+
+	cmp #S_KEY
+	beq scale
 
 	jmp program_loop
 
@@ -82,6 +81,10 @@ move_right:
 	sta SPRITE_0_X
 	jmp program_loop
 
+scale:
+	jsr toggle_scale
+	jmp program_loop
+
 exit_prog:
 	lda #0
 	sta VIC_ENABLE
@@ -93,6 +96,13 @@ exit_prog:
 	lda #BLUE
 	sta BG_COLOR
         rts
+
+toggle_scale:
+	lda HORIZONTAL_EXPAND
+	eor #1
+	sta HORIZONTAL_EXPAND
+	sta VERTICAL_EXPAND
+	rts
 
 .include 'subroutines.asm'
 
