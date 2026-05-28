@@ -1,8 +1,9 @@
 #include "raylib.h"
 
 int main() {
-   const int screenWidth = 800;
-   const int screenHeight = 450;
+   const int screenWidth = 1200;
+   const int screenHeight = 1200;
+   const int cellScale = 40;
 
    InitWindow(screenWidth, screenHeight, "C64 Sprite Editor");
 
@@ -10,11 +11,22 @@ int main() {
 
    while (!WindowShouldClose())
    {
+	   int cols = 24;
+	   int rows = 21;
 	   BeginDrawing();
 
 	   ClearBackground(RAYWHITE);
 
-	   DrawText("C64 Sprite Editor", 350, 200, 20, DARKGRAY);
+	   DrawText("C64 Sprite Editor", 10, 10, 20, DARKGRAY);
+	   int startX = 100;
+	   int startY = 100;
+
+	   for (int i = 0; i <= cols; i++) {
+		   DrawLine(startX + i * cellScale, startY, startX + i * cellScale, startY + rows * cellScale, LIGHTGRAY);
+	   }
+	   for (int j = 0; j <= rows; j++) {
+		   DrawLine(startX, startY + j * cellScale, startX + cols * cellScale, startY + j * cellScale, LIGHTGRAY);
+	   }
 
 	   EndDrawing();
    }
