@@ -3,7 +3,7 @@
 build: main
 
 main: main.c
-	gcc main.c -o main
+	gcc main.c -o main -I./libs -Wall -L./libs -lraylib -lm
 
 run: main
-	./main
+	LD_LIBRARY_PATH=./libs ./main
