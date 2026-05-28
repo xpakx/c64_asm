@@ -4,6 +4,7 @@ int main() {
    const int screenWidth = 1200;
    const int screenHeight = 1200;
    const int cellScale = 40;
+   bool isMulticolor = false;
 
    InitWindow(screenWidth, screenHeight, "C64 Sprite Editor");
 
@@ -11,8 +12,10 @@ int main() {
 
    while (!WindowShouldClose())
    {
-	   int cols = 24;
+	   if (IsKeyPressed(KEY_SPACE)) isMulticolor = !isMulticolor;
+	   int cols = isMulticolor ? 12 : 24;
 	   int rows = 21;
+	   int colMult = isMulticolor ? 2 : 1;
 	   BeginDrawing();
 
 	   ClearBackground(RAYWHITE);
@@ -22,10 +25,22 @@ int main() {
 	   int startY = 100;
 
 	   for (int i = 0; i <= cols; i++) {
-		   DrawLine(startX + i * cellScale, startY, startX + i * cellScale, startY + rows * cellScale, LIGHTGRAY);
+		   DrawLine(
+				   startX + i * cellScale * colMult,
+				   startY,
+				   startX + i * cellScale * colMult,
+				   startY + rows * cellScale,
+				   LIGHTGRAY
+		   );
 	   }
 	   for (int j = 0; j <= rows; j++) {
-		   DrawLine(startX, startY + j * cellScale, startX + cols * cellScale, startY + j * cellScale, LIGHTGRAY);
+		   DrawLine(
+				   startX,
+				   startY + j * cellScale,
+				   startX + cols * cellScale * colMult,
+				   startY + j * cellScale,
+				   LIGHTGRAY
+		   );
 	   }
 
 	   EndDrawing();
