@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include <string.h>
+#include <stdio.h>
 
 #define ROWS 21
 #define COLS 24
@@ -53,6 +54,30 @@ void check_click(int startX, int startY, int cellScale, int colMult, Color drawi
 	}
 }
 
+void save_sprite_to_asm(Color drawing[ROWS][COLS], const char* filename) {
+	FILE *file = fopen(filename, "w");
+	if (!file) return;
+
+	fprintf(file, "sprite_data:\n");
+
+	for (int i = 0; i < 21; i++) {
+		fprintf(file, "    .byte ");
+		for (int b = 0; b < 3; b++) {
+			unsigned char byte = 0;
+			for (int bit = 0; bit < 8; bit++) {
+				if (drawing[i][b * 8 + bit].r != RAYWHITE.r) {
+					byte |= (1 << (7 - bit));
+				}
+			}
+			fprintf(file, "$%02x%s", byte, (b < 2) ? "," : "");
+		}
+		fprintf(file, "\n");
+	}
+
+	fprintf(file, "    .byte $00\n");
+	fclose(file);
+}
+
 int main() {
    const int screenWidth = 1200;
    const int screenHeight = 1200;
@@ -74,6 +99,8 @@ int main() {
    while (!WindowShouldClose())
    {
 	   if (IsKeyPressed(KEY_SPACE)) isMulticolor = !isMulticolor;
+	   if (IsKeyPressed(KEY_S)) save_sprite_to_asm(drawing, "sprite.asm");
+
 	   int cols = isMulticolor ? (int) (COLS/2) : COLS;
 	   int rows = ROWS;
 	   int colMult = isMulticolor ? 2 : 1;
