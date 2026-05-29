@@ -4,6 +4,42 @@
 #define ROWS 21
 #define COLS 24
 
+
+void draw_grid(int startX, int startY, int cellScale, int colMult, int rows, int cols) {
+	   for (int i = 0; i <= cols; i++) {
+		   DrawLine(
+				   startX + i * cellScale * colMult,
+				   startY,
+				   startX + i * cellScale * colMult,
+				   startY + rows * cellScale,
+				   LIGHTGRAY
+		   );
+	   }
+	   for (int j = 0; j <= rows; j++) {
+		   DrawLine(
+				   startX,
+				   startY + j * cellScale,
+				   startX + cols * cellScale * colMult,
+				   startY + j * cellScale,
+				   LIGHTGRAY
+		   );
+	   }
+}
+
+void draw_colors(int startX, int startY, int cellScale, int colMult, int rows, int cols, Color drawing[ROWS][COLS]) {
+	   for (int i = 0; i < rows; i++) {
+		   for (int j = 0; j < cols; j++) {
+			   DrawRectangle(
+					   startX + (j * cellScale * colMult)+1, 
+					   startY + (i * cellScale)+1, 
+					   cellScale * colMult -2, 
+					   cellScale-2, 
+					   drawing[i][j]
+					);
+		   }
+	   }
+}
+
 int main() {
    const int screenWidth = 1200;
    const int screenHeight = 1200;
@@ -35,40 +71,12 @@ int main() {
 	   DrawText("C64 Sprite Editor", 10, 10, 20, DARKGRAY);
 	   int startX = 100;
 	   int startY = 100;
+	   draw_grid(startX, startY, cellScale, colMult, rows, cols);
+	   draw_colors(startX, startY, cellScale, colMult, rows, cols, drawing);
 
-	   for (int i = 0; i <= cols; i++) {
-		   DrawLine(
-				   startX + i * cellScale * colMult,
-				   startY,
-				   startX + i * cellScale * colMult,
-				   startY + rows * cellScale,
-				   LIGHTGRAY
-		   );
-	   }
-	   for (int j = 0; j <= rows; j++) {
-		   DrawLine(
-				   startX,
-				   startY + j * cellScale,
-				   startX + cols * cellScale * colMult,
-				   startY + j * cellScale,
-				   LIGHTGRAY
-		   );
-	   }
-	   for (int i = 0; i < rows; i++) {
-		   for (int j = 0; j < cols; j++) {
-			   DrawRectangle(
-					   startX + (j * cellScale * colMult)+1, 
-					   startY + (i * cellScale)+1, 
-					   cellScale * colMult -2, 
-					   cellScale-2, 
-					   drawing[i][j]
-					);
-		   }
-	   }
 	   EndDrawing();
    }
 
    CloseWindow();
    return 0;
 }
-
