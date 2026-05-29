@@ -94,25 +94,25 @@ toggle_scale:
 
 *= $2000
 sprite_data:
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
-    .byte $AA, $AA, $AA
+    .byte $01,$ff,$80
+    .byte $04,$00,$60
+    .byte $04,$00,$60
+    .byte $08,$00,$00
+    .byte $08,$00,$20
+    .byte $06,$06,$20
+    .byte $12,$02,$20
+    .byte $06,$46,$20
+    .byte $10,$a0,$40
+    .byte $0c,$01,$80
+    .byte $03,$06,$80
+    .byte $05,$9e,$60
+    .byte $1b,$ff,$10
+    .byte $23,$ff,$10
+    .byte $27,$ff,$e0
+    .byte $1f,$ff,$f0
+    .byte $1f,$ff,$e0
+    .byte $0f,$ff,$c0
+    .byte $01,$32,$00
+    .byte $01,$32,$00
+    .byte $00,$cc,$00
     .byte $00
