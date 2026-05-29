@@ -1,10 +1,22 @@
 #include "raylib.h"
+#include <string.h>
+
+#define ROWS 21
+#define COLS 24
 
 int main() {
    const int screenWidth = 1200;
    const int screenHeight = 1200;
    const int cellScale = 40;
    bool isMulticolor = false;
+
+   Color drawing[ROWS][COLS];
+
+   for (int i = 0; i < ROWS; i++) {
+	   for (int j = 0; j < COLS; j++) {
+		   drawing[i][j] = RAYWHITE;
+	   }
+   }
 
    InitWindow(screenWidth, screenHeight, "C64 Sprite Editor");
 
@@ -13,8 +25,8 @@ int main() {
    while (!WindowShouldClose())
    {
 	   if (IsKeyPressed(KEY_SPACE)) isMulticolor = !isMulticolor;
-	   int cols = isMulticolor ? 12 : 24;
-	   int rows = 21;
+	   int cols = isMulticolor ? (int) (COLS/2) : COLS;
+	   int rows = ROWS;
 	   int colMult = isMulticolor ? 2 : 1;
 	   BeginDrawing();
 
@@ -42,7 +54,17 @@ int main() {
 				   LIGHTGRAY
 		   );
 	   }
-
+	   for (int i = 0; i < rows; i++) {
+		   for (int j = 0; j < cols; j++) {
+			   DrawRectangle(
+					   startX + (j * cellScale * colMult)+1, 
+					   startY + (i * cellScale)+1, 
+					   cellScale * colMult -2, 
+					   cellScale-2, 
+					   drawing[i][j]
+					);
+		   }
+	   }
 	   EndDrawing();
    }
 
