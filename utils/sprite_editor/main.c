@@ -40,6 +40,19 @@ void draw_colors(int startX, int startY, int cellScale, int colMult, int rows, i
 	   }
 }
 
+void check_click(int startX, int startY, int cellScale, int colMult, Color drawing[ROWS][COLS]) {
+	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+		Vector2 mousePos = GetMousePosition();
+
+		int j = (int)((mousePos.x - startX) / (cellScale * colMult));
+		int i = (int)((mousePos.y - startY) / cellScale);
+
+		if (i >= 0 && i < ROWS && j >= 0 && j < COLS) {
+			drawing[i][j] = GREEN;
+		}
+	}
+}
+
 int main() {
    const int screenWidth = 1200;
    const int screenHeight = 1200;
@@ -64,13 +77,14 @@ int main() {
 	   int cols = isMulticolor ? (int) (COLS/2) : COLS;
 	   int rows = ROWS;
 	   int colMult = isMulticolor ? 2 : 1;
+	   int startX = 100;
+	   int startY = 100;
+	   check_click(startX, startY, cellScale, colMult, drawing);
 	   BeginDrawing();
 
 	   ClearBackground(RAYWHITE);
 
 	   DrawText("C64 Sprite Editor", 10, 10, 20, DARKGRAY);
-	   int startX = 100;
-	   int startY = 100;
 	   draw_grid(startX, startY, cellScale, colMult, rows, cols);
 	   draw_colors(startX, startY, cellScale, colMult, rows, cols, drawing);
 
