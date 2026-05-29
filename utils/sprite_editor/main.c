@@ -52,6 +52,17 @@ void check_click(int startX, int startY, int cellScale, int colMult, Color drawi
 			drawing[i][j] = GREEN;
 		}
 	}
+
+	else if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
+		Vector2 mousePos = GetMousePosition();
+
+		int j = (int)((mousePos.x - startX) / (cellScale * colMult));
+		int i = (int)((mousePos.y - startY) / cellScale);
+
+		if (i >= 0 && i < ROWS && j >= 0 && j < COLS) {
+			drawing[i][j] = RAYWHITE;
+		}
+	}
 }
 
 void save_sprite_to_asm(Color drawing[ROWS][COLS], const char* filename) {
