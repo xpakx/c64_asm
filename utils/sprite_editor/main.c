@@ -94,6 +94,36 @@ void save_sprite_to_asm(Color drawing[ROWS][COLS], const char* filename) {
 	fclose(file);
 }
 
+void save_multicolor_sprite_to_asm(Color drawing[ROWS][COLS], const char* filename) {
+	FILE *file = fopen(filename, "w");
+	if (!file) return;
+
+	fprintf(file, "sprite_data:\n");
+
+	for (int i = 0; i < ROWS; i++) {
+		fprintf(file, "    .byte ");
+		for (int b = 0; b < 3; b++) {
+			unsigned char byte = 0;
+			for (int p = 0; p < 4; p++) {
+				Color c = drawing[i][b * 4 + p];
+				unsigned char bits = 0;
+
+				if (c.r == palette[0].r && c.g == palette[0].g) bits = 1;
+				else if (c.r == palette[1].r && c.g == palette[1].g) bits = 2;
+				else if (c.r == palette[2].r && c.g == palette[2].g) bits = 3;
+				else bits = 0;
+
+				byte |= (bits << (2 * (3 - p)));
+			}
+			fprintf(file, "$%02x%s", byte, (b < 2) ? "," : "");
+		}
+		fprintf(file, "\n");
+	}
+
+	fprintf(file, "    .byte $00\n");
+	fclose(file);
+}
+
 bool switch_mode(bool isMulticolor, Color drawing[ROWS][COLS]) {
 	for (int i = 0; i < ROWS; i++) {
 		for (int j = 0; j < COLS; j++) {
@@ -126,7 +156,10 @@ int main() {
    while (!WindowShouldClose())
    {
 	   if (IsKeyPressed(KEY_SPACE)) isMulticolor = switch_mode(isMulticolor, drawing);
-	   if (IsKeyPressed(KEY_S)) save_sprite_to_asm(drawing, "sprite.asm");
+	   if (IsKeyPressed(KEY_S)) {
+		   if (isMulticolor) save_multicolor_sprite_to_asm(drawing, "sprite.asm");
+		   else save_sprite_to_asm(drawing, "sprite.asm");
+	   }
 	   if (isMulticolor && IsKeyPressed(KEY_A)) {
 		   current_color_idx = (current_color_idx + 1) % palette_size;
 	   }
