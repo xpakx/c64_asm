@@ -5,6 +5,10 @@
 #define ROWS 21
 #define COLS 24
 
+Color palette[] = { GREEN, BLUE, RED };
+int current_color_idx = 0;
+const int palette_size = 4;
+
 
 void draw_grid(int startX, int startY, int cellScale, int colMult, int rows, int cols) {
 	   for (int i = 0; i <= cols; i++) {
@@ -42,6 +46,7 @@ void draw_colors(int startX, int startY, int cellScale, int colMult, int rows, i
 }
 
 void check_click(int startX, int startY, int cellScale, int colMult, Color drawing[ROWS][COLS]) {
+	Color activeColor = (colMult > 1) ? palette[current_color_idx] : GREEN;
 	if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 		Vector2 mousePos = GetMousePosition();
 
@@ -49,7 +54,7 @@ void check_click(int startX, int startY, int cellScale, int colMult, Color drawi
 		int i = (int)((mousePos.y - startY) / cellScale);
 
 		if (i >= 0 && i < ROWS && j >= 0 && j < COLS) {
-			drawing[i][j] = GREEN;
+			drawing[i][j] = activeColor;
 		}
 	}
 
@@ -89,6 +94,7 @@ void save_sprite_to_asm(Color drawing[ROWS][COLS], const char* filename) {
 	fclose(file);
 }
 
+
 int main() {
    const int screenWidth = 1200;
    const int screenHeight = 1200;
@@ -111,6 +117,9 @@ int main() {
    {
 	   if (IsKeyPressed(KEY_SPACE)) isMulticolor = !isMulticolor;
 	   if (IsKeyPressed(KEY_S)) save_sprite_to_asm(drawing, "sprite.asm");
+	   if (isMulticolor && IsKeyPressed(KEY_A)) {
+		   current_color_idx = (current_color_idx + 1) % palette_size;
+	   }
 
 	   int cols = isMulticolor ? (int) (COLS/2) : COLS;
 	   int rows = ROWS;
