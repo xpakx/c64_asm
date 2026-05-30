@@ -94,6 +94,16 @@ void save_sprite_to_asm(Color drawing[ROWS][COLS], const char* filename) {
 	fclose(file);
 }
 
+bool switch_mode(bool isMulticolor, Color drawing[ROWS][COLS]) {
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLS; j++) {
+			if (drawing[i][j].r != RAYWHITE.r) drawing[i][j] = GREEN;
+		}
+	}
+
+	return !isMulticolor;
+}
+
 
 int main() {
    const int screenWidth = 1200;
@@ -115,7 +125,7 @@ int main() {
 
    while (!WindowShouldClose())
    {
-	   if (IsKeyPressed(KEY_SPACE)) isMulticolor = !isMulticolor;
+	   if (IsKeyPressed(KEY_SPACE)) isMulticolor = switch_mode(isMulticolor, drawing);
 	   if (IsKeyPressed(KEY_S)) save_sprite_to_asm(drawing, "sprite.asm");
 	   if (isMulticolor && IsKeyPressed(KEY_A)) {
 		   current_color_idx = (current_color_idx + 1) % palette_size;
