@@ -11,47 +11,46 @@
 
 start:
 	jsr clr_scr
-	lda #RED
-	sta BORDER_COLOR
 	lda #BLACK
+	sta BORDER_COLOR
+	lda #RED
 	sta BG_COLOR
 
 prepare_sprite:
-	lda #$80
-	sta SPRITE_0_PTR
-
-	lda #100
-	sta SPRITE_0_X
-	sta SPRITE_0_Y
-
 	lda #%00
 	sta SPRITE_MSB
 	lda #%11
 	sta VIC_ENABLE
-	lda #%01
+	lda #%10
 	sta SPRITE_MULTICOLOR_ENABLE
 
 	; color sprite
-
-	lda #CYAN
-	sta SPRITE_MULTICOLOR_0
-    
-	lda #PURPLE
-	sta SPRITE_MULTICOLOR_1
-    
-	lda #GREEN
-	sta SPRITE_COL_0
-
-	; contour sprite
-	lda #$81
+	lda #$80
 	sta SPRITE_1_PTR
 
 	lda #100
 	sta SPRITE_1_X
 	sta SPRITE_1_Y
 
-	lda #GREEN
+	lda #GREY_2
+	sta SPRITE_MULTICOLOR_0
+
+	lda #GREY_1
 	sta SPRITE_COL_1
+    
+	lda #LIGHT_RED
+	sta SPRITE_MULTICOLOR_1
+
+	; contour sprite
+	lda #$81
+	sta SPRITE_0_PTR
+
+	lda #100
+	sta SPRITE_0_X
+	sta SPRITE_0_Y
+
+	lda #BLACK
+	sta SPRITE_COL_0
 
 program_loop:
 
@@ -104,13 +103,13 @@ exit_prog:
 
 toggle_scale:
 	lda HORIZONTAL_EXPAND
-	eor #1
+	eor #11
 	sta HORIZONTAL_EXPAND
 	sta VERTICAL_EXPAND
 	rts
 
 .include 'subroutines.asm'
-.include 'movement.asm'
+.include 'movement2.asm'
 
 
 
@@ -141,25 +140,25 @@ sprite_data:
 
 
 contour_data:
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
-    .byte $00,$00,$00
+    .byte $06,$7d,$80
+    .byte $09,$82,$70
+    .byte $10,$02,$48
+    .byte $24,$01,$84
+    .byte $44,$00,$22
+    .byte $85,$86,$22
+    .byte $88,$82,$22
+    .byte $89,$86,$22
+    .byte $88,$00,$22
+    .byte $48,$00,$44
+    .byte $36,$01,$98
+    .byte $01,$86,$80
+    .byte $02,$ce,$60
+    .byte $0d,$ff,$10
+    .byte $11,$ff,$10
+    .byte $13,$ff,$e0
+    .byte $0f,$ff,$f0
+    .byte $0f,$ff,$e0
+    .byte $07,$ff,$c0
+    .byte $00,$99,$00
+    .byte $00,$66,$00
     .byte $00
