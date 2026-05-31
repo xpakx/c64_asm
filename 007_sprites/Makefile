@@ -1,4 +1,4 @@
-.PHONY: run build run2 build2
+.PHONY: run build run2 build2 run3 build3
 
 build: program.prg
 
@@ -16,4 +16,15 @@ multicolor.prg: *.asm
 
 run2: multicolor.prg
 	x64sc multicolor.prg
+	
+
+
+
+build3: layered.prg
+
+layered.prg: *.asm
+	64tass layered.asm -o layered.prg
+
+run3: layered.prg
+	x64sc layered.prg
 	
