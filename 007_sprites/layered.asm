@@ -24,15 +24,14 @@ prepare_sprite:
 	sta SPRITE_0_X
 	sta SPRITE_0_Y
 
-	lda #0
+	lda #%00
 	sta SPRITE_MSB
-
-	; color sprite
-	lda #%01
+	lda #%11
 	sta VIC_ENABLE
-
 	lda #%01
 	sta SPRITE_MULTICOLOR_ENABLE
+
+	; color sprite
 
 	lda #CYAN
 	sta SPRITE_MULTICOLOR_0
@@ -50,9 +49,6 @@ prepare_sprite:
 	lda #100
 	sta SPRITE_1_X
 	sta SPRITE_1_Y
-
-	lda #%10
-	sta VIC_ENABLE
 
 	lda #GREEN
 	sta SPRITE_COL_1
@@ -120,50 +116,50 @@ toggle_scale:
 
 *= $2000
 sprite_data:
-    .byte $00,$a8,$40
-    .byte $02,$a9,$90
-    .byte $0a,$aa,$40
-    .byte $2a,$aa,$a0
-    .byte $2e,$aa,$e0
-    .byte $ae,$66,$e8
-    .byte $b2,$66,$38
-    .byte $b2,$ee,$38
-    .byte $b2,$aa,$38
-    .byte $20,$b8,$20
-    .byte $00,$64,$00
-    .byte $02,$56,$00
-    .byte $0a,$56,$80
-    .byte $09,$55,$80
+    .byte $00,$00,$00
     .byte $05,$55,$40
-    .byte $05,$55,$40
-    .byte $05,$55,$40
-    .byte $01,$55,$00
-    .byte $00,$88,$00
-    .byte $00,$88,$00
-    .byte $00,$44,$00
+    .byte $05,$55,$50
+    .byte $15,$55,$74
+    .byte $15,$55,$74
+    .byte $5d,$55,$74
+    .byte $75,$55,$74
+    .byte $75,$75,$74
+    .byte $77,$67,$74
+    .byte $15,$55,$94
+    .byte $02,$aa,$00
+    .byte $00,$aa,$00
+    .byte $02,$21,$40
+    .byte $01,$00,$60
+    .byte $06,$00,$90
+    .byte $08,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$a5,$00
     .byte $00
 
 
 contour_data:
-    .byte $00,$a8,$40
-    .byte $02,$a9,$90
-    .byte $0a,$aa,$40
-    .byte $2a,$aa,$a0
-    .byte $2e,$aa,$e0
-    .byte $ae,$66,$e8
-    .byte $b2,$66,$38
-    .byte $b2,$ee,$38
-    .byte $b2,$aa,$38
-    .byte $20,$b8,$20
-    .byte $00,$64,$00
-    .byte $02,$56,$00
-    .byte $0a,$56,$80
-    .byte $09,$55,$80
-    .byte $05,$55,$40
-    .byte $05,$55,$40
-    .byte $05,$55,$40
-    .byte $01,$55,$00
-    .byte $00,$88,$00
-    .byte $00,$88,$00
-    .byte $00,$44,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
+    .byte $00,$00,$00
     .byte $00
