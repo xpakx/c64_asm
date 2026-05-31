@@ -32,13 +32,13 @@ prepare_sprite:
 	lda #1 ;first bit is first sprite
 	sta SPRITE_MULTICOLOR_ENABLE
 
-	lda #CYAN
+	lda #BLUE
 	sta SPRITE_MULTICOLOR_0
     
-	lda #PURPLE
+	lda #LIGHT_RED
 	sta SPRITE_MULTICOLOR_1
     
-	lda #GREEN
+	lda #YELLOW
 	sta SPRITE_COL_0
 
 program_loop:
@@ -104,25 +104,25 @@ toggle_scale:
 
 *= $2000
 sprite_data:
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
-    .byte $1b,$1b,$1b
+    .byte $00,$a8,$40
+    .byte $02,$a9,$90
+    .byte $0a,$aa,$40
+    .byte $2a,$aa,$a0
+    .byte $2e,$aa,$e0
+    .byte $ae,$66,$e8
+    .byte $b2,$66,$38
+    .byte $b2,$ee,$38
+    .byte $b2,$aa,$38
+    .byte $20,$b8,$20
+    .byte $00,$64,$00
+    .byte $02,$56,$00
+    .byte $0a,$56,$80
+    .byte $09,$55,$80
+    .byte $05,$55,$40
+    .byte $05,$55,$40
+    .byte $05,$55,$40
+    .byte $01,$55,$00
+    .byte $00,$88,$00
+    .byte $00,$88,$00
+    .byte $00,$44,$00
     .byte $00
