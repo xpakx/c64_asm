@@ -64,7 +64,10 @@ bitmap_next_byte:
 	cpy #8
 	bne bitmap_next_byte
 color:
-	; TODO
+	jsr get_col_mem_pos
+	ldy #0
+	lda #$40
+	sta (DEST_LOW),y
 	rts
 
 
@@ -78,9 +81,9 @@ get_screen_pos:
 
 get_col_mem_pos:
 	lda #$04
-	sta DEST_LOW
-	lda #$D8
 	sta DEST_HIGH
+	lda #$04
+	sta DEST_LOW
 	rts
 
 init_bitmap:
