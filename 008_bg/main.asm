@@ -3,6 +3,12 @@
 ; ------------
 
 .include 'header.asm'
+SOURCE_LOW = $20
+SOURCE_HIGH = $21
+
+DEST_LOW = $24
+DEST_HIGH = $25
+
 .include 'basic.asm'
 
 *= $0810 
@@ -15,6 +21,7 @@ start:
 	sta BG_COLOR
 
 	jsr init_bitmap
+	jsr draw_bitmap
 
 program_loop:
 
@@ -39,6 +46,42 @@ exit_prog:
 	lda #BLUE
 	sta BG_COLOR
         rts
+
+draw_bitmap:
+	lda #<sprite_data
+	sta SOURCE_LOW
+	lda #>sprite_data
+	sta SOURCE_HIGH
+
+	; TODO position
+	jsr get_screen_pos
+bitmap_next_line:
+	ldy #0
+bitmap_next_byte:
+	lda (SOURCE_LOW),y
+	sta (DEST_LOW),y
+	iny
+	cpy #8
+	bne bitmap_next_byte
+color:
+	; TODO
+	rts
+
+
+; TODO, use x, y pos from x and y register
+get_screen_pos:
+	lda #<$2020
+	sta DEST_LOW
+	lda #>$2020
+	sta DEST_HIGH
+	rts
+
+get_col_mem_pos:
+	lda #$04
+	sta DEST_LOW
+	lda #$D8
+	sta DEST_HIGH
+	rts
 
 init_bitmap:
 	lda #%00011000
@@ -67,7 +110,7 @@ disable_bitmap:
 .include 'subroutines.asm'
 
 
-*= $2000
+*= $1500
 sprite_data:
     .byte %00111100
     .byte %01111110
