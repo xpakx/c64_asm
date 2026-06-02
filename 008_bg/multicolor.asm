@@ -24,7 +24,7 @@ start:
 	sta BG_COLOR
 
 	jsr clear_bitmap
-	jsr init_bitmap
+	jsr init_bitmap_mult
 	jsr draw_bitmap
 
 program_loop:
@@ -97,50 +97,9 @@ get_col_mem_pos:
 	sta COLOR_LOW
 	rts
 
-init_bitmap:
-	lda #%00011000
-	sta VIC_MEM_PTR
-
-	lda #%00111011
-	sta VIC_CONTROL_1
-
-	lda #%11011000
-	sta VIC_CONTROL_2
-	rts
-
-disable_bitmap:
-	lda #%00011011
-	sta VIC_CONTROL_1
-
-	lda #%00010100
-	sta VIC_MEM_PTR
-
-	lda #%00001000
-	sta VIC_CONTROL_2
-    
-	jsr clr_scr
-	rts
-
-clear_bitmap:
-	lda #$00
-	sta DEST_LOW
-	lda #$20
-	sta DEST_HIGH
-	ldx #32
-clear_bitmap_loop:
-	ldy #0
-	lda #0
-clear_bitmap_byte:
-	dey
-	sta (DEST_LOW),y
-	bne clear_bitmap_byte
-
-	inc DEST_HIGH
-	dex
-	bne clear_bitmap_loop
-	rts
 
 .include 'subroutines.asm'
+.include 'bitmap.asm'
 
 
 *= $1500
