@@ -20,6 +20,7 @@ start:
 	lda #BLACK
 	sta BG_COLOR
 
+	jsr clear_bitmap
 	jsr init_bitmap
 	jsr draw_bitmap
 
@@ -110,6 +111,19 @@ disable_bitmap:
 	jsr clr_scr
 	rts
 
+clear_bitmap:
+	lda #$00
+	sta DEST_LOW
+	lda #$20
+	sta DEST_HIGH
+	ldy #0
+	lda #0
+clear_bitmap_loop:
+	dey
+	sta (DEST_LOW),y
+	bne clear_bitmap_loop
+	rts
+
 .include 'subroutines.asm'
 
 
@@ -119,8 +133,8 @@ sprite_data:
     .byte %01111110
     .byte %11011011
     .byte %11111111
-    .byte %11111111
-    .byte %11111111
+    .byte %11011011
+    .byte %11100111
     .byte %01111110
     .byte %00111100
     .byte $00
