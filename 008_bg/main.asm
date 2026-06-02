@@ -116,11 +116,17 @@ clear_bitmap:
 	sta DEST_LOW
 	lda #$20
 	sta DEST_HIGH
+	ldx #32
+clear_bitmap_loop:
 	ldy #0
 	lda #0
-clear_bitmap_loop:
+clear_bitmap_byte:
 	dey
 	sta (DEST_LOW),y
+	bne clear_bitmap_byte
+
+	inc DEST_HIGH
+	dex
 	bne clear_bitmap_loop
 	rts
 
