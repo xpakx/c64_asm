@@ -6,6 +6,9 @@
 SOURCE_LOW = $20
 SOURCE_HIGH = $21
 
+COLOR_LOW = $22
+COLOR_HIGH = $23
+
 DEST_LOW = $24
 DEST_HIGH = $25
 
@@ -67,8 +70,10 @@ bitmap_next_byte:
 color:
 	jsr get_col_mem_pos
 	ldy #0
-	lda #$40
+	lda #$43
 	sta (DEST_LOW),y
+	lda #LIGHT_RED
+	sta (COLOR_LOW),y
 	rts
 
 
@@ -85,6 +90,11 @@ get_col_mem_pos:
 	sta DEST_HIGH
 	lda #$04
 	sta DEST_LOW
+
+	lda #$D8
+	sta COLOR_HIGH
+	lda #$04
+	sta COLOR_LOW
 	rts
 
 init_bitmap:
