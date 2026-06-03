@@ -38,6 +38,7 @@ get_key:
 
 exit_prog:
 	jsr disable_font
+	jsr disable_multicolor
 	jsr clr_scr
 	lda #WHITE
 	sta CUR_COLOR  
@@ -88,6 +89,12 @@ activate_multicolor:
 
 	lda #$09          ;multicolor flag for tile
 	sta $D99A
+	rts
+
+disable_multicolor:
+	lda VIC_CONTROL_2  ; multicolor
+	and #%11101111
+	sta VIC_CONTROL_2
 	rts
 
 
