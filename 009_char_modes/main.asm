@@ -61,6 +61,10 @@ copy_font_loop:
 	rts
 
 disable_font:
+	lda $D018
+	and #%11110001
+	ora #%00000100
+	sta $D018
 	rts
 
 put_char:
