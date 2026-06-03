@@ -46,6 +46,18 @@ exit_prog:
         rts
 
 init_font:
+	ldx #0
+copy_font_loop:
+	lda sprite_data,x
+	sta $3008,x
+	inx
+	cpx #8
+	bne copy_font_loop
+
+	lda $D018
+	and #%11110001     ; clear character memory bits
+	ora #%00001100     ; Set character memory to slot 3/%011 (at $3000)
+	sta $D018
 	rts
 
 disable_font:
