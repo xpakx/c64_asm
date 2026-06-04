@@ -41,24 +41,24 @@ exit_prog:
 init_interrupts:
 	sei
 	lda #%01111111
-	sta $DC0D
+	sta CIA1_ICR
 
 	and $D011
 	sta $D011
 
-	lda $DC0D
-	lda $DD0D
+	lda CIA1_ICR
+	lda CIA2_ICR
 
 	lda #150   ; raster line for interrupt
-	sta $D012
+	sta VIC_RASTER
 
 	lda #<irq
-	sta $0314
+	sta IRR_ADDR_LOW
 	lda #>irq
-	sta $0315
+	sta IRR_ADDR_HIGH
 
 	lda #%00000001
-	sta $D01A
+	sta VIC_IRM
 
 	cli
 	rts
@@ -67,17 +67,17 @@ clean_interrupts:
 	sei
 
 	lda #%00000000
-	sta $D01A       
+	sta VIC_IRM
 
 	lda #%10000001  
-	sta $DC0D       
+	sta CIA1_ICR       
 
 	lda #$31
-	sta $0314
+	sta IRR_ADDR_LOW
 	lda #$EA
-	sta $0315
+	sta IRR_ADDR_HIGH
 
-	asl $D019       
+	asl VIC_IRR
 
 	cli
 	rts
@@ -96,7 +96,7 @@ pause:
 	lda #RED
 	sta BG_COLOR
 
-	asl $D019 ; ack interrupt
+	asl VIC_IRR ; ack interrupt
 	jmp $EA31 ; jump to standard interrupt service routine
 
 .include 'subroutines.asm'

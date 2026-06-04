@@ -40,6 +40,16 @@ SPRITE_MULTICOLOR_1 = $D026
 VIC_CONTROL_1   = $D011
 VIC_CONTROL_2   = $D016
 VIC_MEM_PTR     = $D018
+
+VIC_RASTER     = $D012  ; VIC-II raster position
+VIC_IRR        = $D019  ; VIC-II interrupt request register
+VIC_IRM        = $D01A  ; VIC-II interrupt mask register
+CIA1_ICR       = $DC0D  ; CIA #1 interrupt control register
+CIA2_ICR       = $DD0D  ; CIA #2 interrupt control register
+
+IRR_ADDR_LOW   = $0314
+IRR_ADDR_HIGH  = $0315
+
 ; ---------
 ; Colors
 ; ---------
