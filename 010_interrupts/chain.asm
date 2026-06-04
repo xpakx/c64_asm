@@ -3,12 +3,6 @@
 ; ------------
 
 .include 'header.asm'
-SOURCE_LOW = $20
-SOURCE_HIGH = $21
-
-DEST_LOW = $24
-DEST_HIGH = $25
-
 .include 'basic.asm'
 
 *= $0810 
@@ -34,6 +28,7 @@ get_key:
 	jmp program_loop
 
 exit_prog:
+	jsr clean_interrupts
 	jsr clr_scr
 	lda #WHITE
 	sta CUR_COLOR  
@@ -65,6 +60,25 @@ init_interrupts:
 
 	lda #%00000001
 	sta $D01A
+
+	cli
+	rts
+
+clean_interrupts:
+	sei
+
+	lda #%00000000
+	sta $D01A       
+
+	lda #%10000001  
+	sta $DC0D       
+
+	lda #$31
+	sta $0314
+	lda #$EA
+	sta $0315
+
+	asl $D019       
 
 	cli
 	rts
