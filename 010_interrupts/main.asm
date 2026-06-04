@@ -70,6 +70,19 @@ init_interrupts:
 	rts
 
 irq:
+	lda #YELLOW
+	sta BORDER_COLOR
+
+	ldx #$B0
+pause:
+	dex
+	bne pause
+
+	lda #BLACK
+	sta BORDER_COLOR
+	lda #RED
+	sta BG_COLOR
+
 	asl $D019 ; ack interrupt
 	jmp $EA31 ; jump to standard interrupt service routine
 
