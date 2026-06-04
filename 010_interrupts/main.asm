@@ -46,9 +46,8 @@ init_interrupts:
 	and $D011
 	sta $D011
 
-
-	sta $DC0D
-	sta $DD0D
+	lda $DC0D
+	lda $DD0D
 
 	lda #150   ; raster line for interrupt
 	sta $D012

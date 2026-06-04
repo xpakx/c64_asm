@@ -40,15 +40,16 @@ exit_prog:
 
 init_interrupts:
 	sei
+	; DC0D write uses value of bit 7 for all set bits
 	lda #%01111111
 	sta $DC0D
 
 	and $D011
 	sta $D011
 
-
-	sta $DC0D
-	sta $DD0D
+	; these registers behave differently on write and on read
+	lda $DC0D    ; read to clear flags
+	lda $DD0D    ; read to clear flags
 
 	lda #150   ; raster line for interrupt
 	sta $D012
