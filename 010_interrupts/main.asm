@@ -19,6 +19,7 @@ start:
 	sta BORDER_COLOR
 	lda #BLACK
 	sta BG_COLOR
+	jsr init_interrupts
 
 
 program_loop:
@@ -41,5 +42,35 @@ exit_prog:
 	lda #BLUE
 	sta BG_COLOR
         rts
+
+init_interrupts:
+	sei
+	lda #%01111111
+	sta $DC0D
+
+	and $D011
+	sta $D011
+
+
+	sta $DC0D
+	sta $DD0D
+
+	lda #150   ; raster line for interrupt
+	sta $D012
+
+	lda #<irq
+	sta $0314
+	lda #>irq
+	sta $0315
+
+	lda #%00000001
+	sta $D01A
+
+	cli
+	rts
+
+irq:
+	asl $D019 ; ack interrupt
+	jmp $EA31 ; jump to standard interrupt service routine
 
 .include 'subroutines.asm'
