@@ -1,4 +1,4 @@
-.PHONY: run build run2 build2
+.PHONY: run build run2 buld2 run3 build3
 
 build: program.prg
 
@@ -11,10 +11,21 @@ run: program.prg
 
 
 
-build2: raster.prg
+build2: chain.prg
 
-raster.prg: raster_timer.asm
-	64tass raster_timer.asm -o raster.prg
+chain.prg: *.asm
+	64tass chain.asm -o chain.prg
 
-run2: raster.prg
-	x64sc raster.prg
+run2: chain.prg
+	x64sc chain.prg
+
+
+
+
+build3: dual.prg
+
+dual.prg: *.asm
+	64tass dual.asm -o dual.prg
+
+run3: dual.prg
+	x64sc dual.prg
