@@ -121,6 +121,9 @@ exit_irq:
     LDA #>irq2
     STA $0315
 
+    lda #150
+    sta $D012
+
     asl VIC_IRR     ; ack
     jmp $EA31
 
@@ -135,7 +138,8 @@ irq2:
     STA $0314
     LDA #>irq3
     STA $0315
-    lda #100
+
+    lda #200
     sta $D012
 
     asl $D019
@@ -153,7 +157,8 @@ irq3:
     sta $0314
     lda #>irq
     sta $0315
-    lda #150
+
+    lda #242
     sta $D012
 
     asl $D019
