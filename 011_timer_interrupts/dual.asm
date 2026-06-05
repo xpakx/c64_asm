@@ -5,6 +5,7 @@
 .include 'header.asm'
 COUNTER = $02
 TIMER_TICK = $03
+END_FLAG = $04
 SCREEN = $0400
 
 .include 'basic.asm'
@@ -27,9 +28,14 @@ start:
     lda #60
     sta TIMER_TICK
 
+    lda #0
+    sta END_FLAG
+
     jsr init_interrupts
 
 program_loop:
+    bit END_FLAG
+    bmi exit_prog
 get_key:
     jsr GETIN
     beq program_loop
@@ -111,6 +117,11 @@ irq:
     dec COUNTER
     
     lda COUNTER
+    bne update_digit
+    lda #$FF
+    sta END_FLAG
+    lda COUNTER
+update_digit:
     clc
     adc #$30
     sta SCREEN
