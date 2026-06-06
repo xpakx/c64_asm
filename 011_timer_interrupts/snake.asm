@@ -12,6 +12,7 @@ DEST_LOW = $20
 DEST_HIGH = $21
 PLAYER_ROW = $22
 PLAYER_COL = $23
+FRAME_FLAG = $24
 
 .include 'basic.asm'
 
@@ -37,6 +38,11 @@ start:
     jsr init_player
 
 program_loop:
+    bit FRAME_FLAG
+    bpl get_key
+    jsr move
+    lda #0
+    sta FRAME_FLAG
 
 get_key:
     jsr GETIN
@@ -162,7 +168,8 @@ update_digit:
     sta SCREEN
 
 logic:
-    jsr move
+    lda #%10000000
+    sta FRAME_FLAG
 
 exit_irq:
     asl VIC_IRR
