@@ -5,7 +5,13 @@
 .include 'header.asm'
 COUNTER = $02
 TIMER_TICK = $03
+TEMP = $06
 SCREEN = $0400
+
+DEST_LOW = $20
+DEST_HIGH = $21
+PLAYER_ROW = $22
+PLAYER_COL = $23
 
 .include 'basic.asm'
 
@@ -28,6 +34,7 @@ start:
     sta TIMER_TICK
 
     jsr init_interrupts
+    jsr init_player
 
 program_loop:
 
@@ -117,9 +124,33 @@ update_digit:
     adc #$30
     sta SCREEN
 
+logic:
+    jsr print_player
+
 exit_irq:
     asl VIC_IRR
     jmp $EA31
+
+
+init_player:
+    lda #$0A
+    sta PLAYER_ROW
+    sta PLAYER_COL
+    rts
+
+print_player:
+    lda #GREEN
+    sta CUR_COLOR  
+
+    ldx player_row
+    ldy player_col
+    clc
+    jsr PLOT
+
+    lda #KEY_0
+    jsr CHROUT
+    rts
+
 
 
 .include 'subroutines.asm'
