@@ -45,6 +45,25 @@ get_key:
     cmp #Q_KEY
     beq exit_prog
 
+    cmp #UP_KEY
+    bne test_down
+    lda direction
+    cmp #%00000001
+    beq program_loop
+    lda #%00000010
+    sta next_dir
+    jmp program_loop
+test_down:
+    cmp #DOWN_KEY
+    bne test_right
+    lda direction
+    cmp #%00000010
+    beq program_loop
+    lda #%00000001
+    sta next_dir
+    jmp program_loop
+test_right:
+
     jmp program_loop
 
 exit_prog:
@@ -125,7 +144,7 @@ update_digit:
     sta SCREEN
 
 logic:
-    jsr print_player
+    jsr move
 
 exit_irq:
     asl VIC_IRR
@@ -142,8 +161,8 @@ print_player:
     lda #GREEN
     sta CUR_COLOR  
 
-    ldx player_row
-    ldy player_col
+    ldx PLAYER_ROW
+    ldy PLAYER_COL
     clc
     jsr PLOT
 
@@ -151,6 +170,49 @@ print_player:
     jsr CHROUT
     rts
 
+clear_player:
+    ldx PLAYER_ROW
+    ldy PLAYER_COL
+    clc
+    jsr PLOT
 
+    lda #$20
+    jsr CHROUT
+    rts
+
+
+move:
+    jsr clear_player
+    jsr move_head
+    jsr print_player
+    rts
+
+
+move_head:
+    lda next_dir
+    sta direction
+    cmp #%00000001
+    beq move_down
+    cmp #%00000010
+    beq move_up
+    rts
+move_up:
+    lda PLAYER_ROW
+    beq end_move
+    dec PLAYER_ROW
+    rts
+move_down:
+    lda PLAYER_ROW
+    cmp #$18
+    beq end_move
+    inc PLAYER_ROW
+    rts
+end_move:
+    rts
 
 .include 'subroutines.asm'
+
+direction:
+	.byte %00000001   ;last bit is down, then up, left, right
+next_dir:
+	.byte %00000001
