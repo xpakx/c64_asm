@@ -63,6 +63,24 @@ test_down:
     sta next_dir
     jmp program_loop
 test_right:
+    cmp #RIGHT_KEY
+    bne test_left
+    lda direction
+    cmp #%00000100
+    beq program_loop
+    lda #%00001000
+    sta next_dir
+    jmp program_loop
+test_left:
+    cmp #LEFT_KEY
+    bne post_dir
+    lda direction
+    cmp #%00001000
+    beq program_loop
+    lda #%00000100
+    sta next_dir
+    jmp program_loop
+post_dir:
 
     jmp program_loop
 
@@ -195,6 +213,10 @@ move_head:
     beq move_down
     cmp #%00000010
     beq move_up
+    cmp #%00000100
+    beq move_left
+    cmp #%00001000
+    beq move_right
     rts
 move_up:
     lda PLAYER_ROW
@@ -206,6 +228,17 @@ move_down:
     cmp #$18
     beq end_move
     inc PLAYER_ROW
+    rts
+move_left:
+    lda PLAYER_COL
+    beq end_move
+    dec PLAYER_COL
+    rts
+move_right:
+    lda PLAYER_COL
+    cmp #$27
+    beq end_move
+    inc PLAYER_COL
     rts
 end_move:
     rts
