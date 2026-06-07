@@ -14,7 +14,9 @@ PLAYER_ROW = $22
 PLAYER_COL = $23
 FRAME_FLAG = $24
 
-DEBUG = 1
+.weak
+DEBUG = 0
+.endweak
 
 .include 'basic.asm'
 
