@@ -1,4 +1,4 @@
-.PHONY: run build run2 buld2 run3 build3 snake build4
+.PHONY: run build run2 buld2 run3 build3
 
 build: program.prg
 
@@ -29,14 +29,3 @@ dual.prg: *.asm
 
 run3: dual.prg
 	x64sc dual.prg
-
-
-
-
-build4: snake.prg
-
-snake.prg: snake.asm
-	64tass snake.asm -o snake.prg
-
-snake: snake.prg
-	x64sc snake.prg
