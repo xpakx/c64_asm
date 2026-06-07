@@ -37,6 +37,11 @@ start:
     jsr init_interrupts
     jsr init_player
 
+    jsr get_rand
+    tay
+    lda #$40
+    sta SCREEN,y
+
 program_loop:
     bit FRAME_FLAG
     bpl get_key
@@ -250,9 +255,29 @@ move_right:
 end_move:
     rts
 
+get_rand:
+    lda seed
+    asl
+    asl
+    asl
+    asl
+    asl
+    asl
+    asl
+    clc
+    adc seed
+    clc
+    adc 1
+    sta seed
+    rts
+
+
 .include 'subroutines.asm'
 
 direction:
 	.byte %00000001   ;last bit is down, then up, left, right
 next_dir:
 	.byte %00000001
+
+seed:
+	.byte $F5
