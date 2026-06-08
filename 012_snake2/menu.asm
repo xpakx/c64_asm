@@ -11,9 +11,16 @@ switch_to_game:
     sta scene_keys + 2
 
     cli
+
+    jsr get_rand
+    tay
+    lda #$40
+    sta SCREEN,y
+
     rts
 
 menu_logic:
+    jsr get_rand
     rts
 
 menu_keys:

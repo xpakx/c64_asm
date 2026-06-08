@@ -43,10 +43,6 @@ start:
     jsr init_interrupts
     jsr init_player
 
-    jsr get_rand
-    tay
-    lda #$40
-    sta SCREEN,y
 
 program_loop:
     bit FRAME_FLAG
