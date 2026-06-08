@@ -58,46 +58,11 @@ program_loop:
 get_key:
     jsr GETIN
     beq program_loop
-        
+
     cmp #Q_KEY
     beq exit_prog
 
-    cmp #UP_KEY
-    bne test_down
-    lda direction
-    cmp #%00000001
-    beq program_loop
-    lda #%00000010
-    sta next_dir
-    jmp program_loop
-test_down:
-    cmp #DOWN_KEY
-    bne test_right
-    lda direction
-    cmp #%00000010
-    beq program_loop
-    lda #%00000001
-    sta next_dir
-    jmp program_loop
-test_right:
-    cmp #RIGHT_KEY
-    bne test_left
-    lda direction
-    cmp #%00000100
-    beq program_loop
-    lda #%00001000
-    sta next_dir
-    jmp program_loop
-test_left:
-    cmp #LEFT_KEY
-    bne post_dir
-    lda direction
-    cmp #%00001000
-    beq program_loop
-    lda #%00000100
-    sta next_dir
-    jmp program_loop
-post_dir:
+    jsr scene_movement
     jmp program_loop
 
 exit_prog:

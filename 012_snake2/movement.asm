@@ -47,3 +47,44 @@ direction:
 	.byte %00000001   ;last bit is down, then up, left, right
 next_dir:
 	.byte %00000001
+
+
+
+scene_movement:
+    cmp #UP_KEY
+    bne test_down
+    lda direction
+    cmp #%00000001
+    beq post_dir
+    lda #%00000010
+    sta next_dir
+    rts
+test_down:
+    cmp #DOWN_KEY
+    bne test_right
+    lda direction
+    cmp #%00000010
+    beq post_dir
+    lda #%00000001
+    sta next_dir
+    rts
+test_right:
+    cmp #RIGHT_KEY
+    bne test_left
+    lda direction
+    cmp #%00000100
+    beq post_dir
+    lda #%00001000
+    sta next_dir
+    rts
+test_left:
+    cmp #LEFT_KEY
+    bne post_dir
+    lda direction
+    cmp #%00001000
+    beq post_dir
+    lda #%00000100
+    sta next_dir
+    rts
+post_dir:
+    rts
