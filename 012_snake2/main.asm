@@ -51,7 +51,8 @@ start:
 program_loop:
     bit FRAME_FLAG
     bpl get_key
-    jsr move
+scene_logic:
+    jsr menu_logic
     lda #0
     sta FRAME_FLAG
 
@@ -61,8 +62,8 @@ get_key:
 
     cmp #Q_KEY
     beq exit_prog
-
-    jsr scene_movement
+scene_keys:
+    jsr menu_keys
     jmp program_loop
 
 exit_prog:
@@ -124,6 +125,7 @@ get_rand:
 
 
 .include 'movement.asm'
+.include 'menu.asm'
 .include 'subroutines.asm'
 .include 'interrupts.asm'
 

@@ -1,4 +1,4 @@
-move:
+game_logic:
     jsr clear_player
     jsr move_head
     jsr print_player
@@ -50,7 +50,7 @@ next_dir:
 
 
 
-scene_movement:
+game_keys:
     cmp #UP_KEY
     bne test_down
     lda direction
