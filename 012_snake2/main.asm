@@ -63,6 +63,7 @@ scene_keys:
     jmp program_loop
 
 exit_prog:
+    jsr switch_to_menu
     jsr clean_interrupts
     jsr clr_scr
     lda #WHITE

@@ -16,6 +16,21 @@ switch_to_game:
 
     rts
 
+switch_to_menu:
+    sei
+    lda #<menu_logic
+    sta scene_logic + 1
+    lda #>menu_logic
+    sta scene_logic + 2
+
+    lda #<menu_keys
+    sta scene_keys + 1
+    lda #>menu_keys
+    sta scene_keys + 2
+
+    cli
+    rts
+
 menu_logic:
     jsr get_rand
     rts
