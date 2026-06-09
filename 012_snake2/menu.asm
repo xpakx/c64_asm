@@ -1,3 +1,18 @@
+init_menu:
+   ldx #$4A
+   ldy #$0A
+   jsr PLOT
+
+   lda #WHITE
+   sta CUR_COLOR  
+
+   lda #<menu_msg
+   sta STR_PTR
+   lda #>menu_msg
+   sta STR_PTR+1
+   jsr print_str
+   rts
+
 switch_to_game:
     sei
     lda #<game_logic
@@ -41,3 +56,8 @@ menu_keys:
     jsr switch_to_game
 menu_end:
     rts
+
+
+menu_msg:
+    .text "PRESS FIRE TO START"
+    .byte 0

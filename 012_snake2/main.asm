@@ -1,5 +1,5 @@
 ; ------------
-; Commodore 64 ASM - Raster Interrupt Version
+; Commodore 64 ASM - Snake
 ; ------------
 
 .include 'header.asm'
@@ -46,6 +46,7 @@ start:
 
     jsr init_interrupts
     jsr init_player
+    jsr init_menu
 
 
 program_loop:
@@ -131,4 +132,4 @@ get_rand:
 .include 'interrupts.asm'
 
 seed:
-	.byte $F5
+    .byte $F5
