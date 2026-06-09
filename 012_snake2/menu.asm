@@ -12,10 +12,7 @@ switch_to_game:
 
     cli
 
-    jsr get_rand
-    tay
-    lda #$40
-    sta SCREEN,y
+    jsr init_game
 
     rts
 

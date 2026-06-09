@@ -1,3 +1,10 @@
+init_game:
+    jsr get_rand
+    tay
+    lda #$40
+    sta SCREEN,y
+    rts
+
 game_logic:
     jsr clear_player
     jsr move_head
