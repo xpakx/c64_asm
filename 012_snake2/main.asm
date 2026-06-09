@@ -14,6 +14,9 @@ PLAYER_ROW = $22
 PLAYER_COL = $23
 FRAME_FLAG = $24
 
+APPLE_ROW = $25
+APPLE_COL = $26
+
 .weak
 DEBUG = 0
 .endweak

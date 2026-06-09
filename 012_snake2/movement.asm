@@ -1,8 +1,6 @@
 init_game:
-    jsr get_rand
-    tay
-    lda #$40
-    sta SCREEN,y
+    jsr generate_apple
+    jsr draw_apple
     rts
 
 game_logic:
@@ -94,4 +92,33 @@ test_left:
     sta next_dir
     rts
 post_dir:
+    rts
+
+
+generate_apple:
+    jsr get_rand
+    and #$3F
+    cmp #40
+    bcs generate_apple
+    sta APPLE_COL
+rand_row:
+    jsr get_rand
+    lda $D41B
+    and #$1F
+    cmp #25
+    bcs rand_row
+    sta APPLE_ROW
+    rts
+
+draw_apple:
+    lda #RED
+    sta CUR_COLOR  
+
+    ldx APPLE_ROW
+    ldy APPLE_COL
+    clc
+    jsr PLOT
+
+    lda #KEY_0
+    jsr CHROUT
     rts
