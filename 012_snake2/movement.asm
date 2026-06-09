@@ -7,6 +7,7 @@ game_logic:
     jsr clear_player
     jsr move_head
     jsr print_player
+    jsr check_collision_apple
     rts
 
 
@@ -103,7 +104,6 @@ generate_apple:
     sta APPLE_COL
 rand_row:
     jsr get_rand
-    lda $D41B
     and #$1F
     cmp #25
     bcs rand_row
@@ -122,3 +122,20 @@ draw_apple:
     lda #KEY_0
     jsr CHROUT
     rts
+
+
+check_collision_apple:
+    lda PLAYER_ROW
+    cmp APPLE_ROW
+    bne finish_collision
+    lda PLAYER_COL
+    cmp APPLE_COL
+    bne finish_collision
+
+    lda #%10000000
+    sta GROW_FLAG
+    jsr generate_apple
+    jsr draw_apple
+finish_collision:
+    rts
+

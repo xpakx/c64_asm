@@ -16,6 +16,7 @@ FRAME_FLAG = $24
 
 APPLE_ROW = $25
 APPLE_COL = $26
+GROW_FLAG = $27
 
 .weak
 DEBUG = 0
