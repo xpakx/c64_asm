@@ -7,6 +7,7 @@ init_game:
     rts
 
 game_logic:
+    jsr death_test
     jsr clear_player
     jsr redraw_last_segment
     jsr move_segments
@@ -15,6 +16,7 @@ game_logic:
     jsr print_first_segment
     
     jsr check_collision_apple
+    jsr check_collision_snake
     rts
 
 
@@ -259,4 +261,40 @@ move_first_seg:
     lda PLAYER_COL
     sta segments+1
 
+    rts
+
+check_collision_snake:
+    ldx #$03
+snake_collision_loop:
+    cpx segments_len
+    beq end_snake_collision_loop
+	
+    txa
+    asl
+    tay
+
+    lda player_row
+    cmp segments,y
+    bne snake_collision_continue
+
+    lda player_col
+    cmp segments+1,y
+    bne snake_collision_continue
+
+    lda #%10000000
+    sta DEATH_FLAG
+snake_collision_continue:
+    inx
+    jmp snake_collision_loop
+end_snake_collision_loop:
+    rts
+
+
+death_test:
+    bit DEATH_FLAG
+    bpl end_death_test
+    lda #%00000000
+    sta DEATH_FLAG
+    ; TODO
+end_death_test:
     rts
