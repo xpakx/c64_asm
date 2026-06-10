@@ -1,4 +1,5 @@
 init_game:
+    jsr clr_scr
     jsr generate_apple
     jsr draw_apple
     rts
