@@ -133,3 +133,13 @@ get_rand:
 
 seed:
     .byte $F5
+
+segments_len:
+	.byte 3
+segments:
+ 	.byte $09
+ 	.byte $0A
+ 	.byte $08
+ 	.byte $0A
+ 	.byte $07
+ 	.byte $0A

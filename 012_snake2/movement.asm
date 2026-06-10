@@ -1,13 +1,18 @@
 init_game:
     jsr clr_scr
+    jsr print_player
+    jsr print_segments
     jsr generate_apple
     jsr draw_apple
     rts
 
 game_logic:
     jsr clear_player
+    jsr redraw_last_segment
     jsr move_head
     jsr print_player
+    jsr print_first_segment
+    
     jsr check_collision_apple
     rts
 
@@ -51,9 +56,9 @@ end_move:
 
 
 direction:
-	.byte %00000001   ;last bit is down, then up, left, right
+    .byte %00000001   ;last bit is down, then up, left, right
 next_dir:
-	.byte %00000001
+    .byte %00000001
 
 
 
@@ -126,6 +131,9 @@ draw_apple:
 
 
 check_collision_apple:
+    lda #%00000000
+    sta GROW_FLAG
+
     lda PLAYER_ROW
     cmp APPLE_ROW
     bne finish_collision
@@ -140,3 +148,74 @@ check_collision_apple:
 finish_collision:
     rts
 
+
+print_segments:
+    ldx #$00
+    lda #LIGHT_GREEN
+    sta CUR_COLOR  
+segments_loop:
+    cpx segments_len
+    beq end_segments_loop
+
+    txa
+    pha
+
+    asl
+    tax
+    ldy segments+1,x
+    lda segments,x
+    tax
+
+    clc
+    jsr PLOT
+
+    pla
+    tax
+
+    lda #KEY_0
+    jsr CHROUT
+
+    inx
+    bne segments_loop
+end_segments_loop:
+    rts
+
+
+redraw_last_segment:
+    bit GROW_FLAG
+    bmi end_redraw_segments
+    jsr clear_last_segment
+end_redraw_segments:
+    rts
+
+clear_last_segment:
+    cpa segments_len
+    sec
+    sbc #1
+
+    asl
+    tax
+    ldy segments+1,x
+    lda segments,x
+    tax
+
+    clc
+    jsr PLOT
+
+    lda #SPACE_KEY
+    jsr CHROUT
+    rts
+
+print_first_segment:
+    lda #LIGHT_GREEN
+    sta CUR_COLOR      
+
+    ldy segments+1
+    ldx segments
+
+    clc
+    jsr PLOT
+
+    lda #KEY_0
+    jsr CHROUT
+    rts
