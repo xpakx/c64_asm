@@ -9,6 +9,7 @@ init_game:
 game_logic:
     jsr clear_player
     jsr redraw_last_segment
+    jsr move_segments
     jsr move_head
     jsr print_player
     jsr print_first_segment
@@ -189,7 +190,7 @@ end_redraw_segments:
     rts
 
 clear_last_segment:
-    cpa segments_len
+    lda segments_len
     sec
     sbc #1
 
@@ -218,4 +219,44 @@ print_first_segment:
 
     lda #KEY_0
     jsr CHROUT
+    rts
+
+
+
+move_segments:
+    bit GROW_FLAG
+    bpl prepare_iterator
+
+    lda segments_len
+    inc segments_len
+
+prepare_iterator:
+    ldx segments_len
+    dex
+
+move_segments_loop:
+    txa
+    pha
+
+    asl
+    tax
+
+    lda segments-2,x
+    sta segments,x
+    lda segments-1,x
+    sta segments+1,x
+
+    pla
+    tax
+
+    dex
+    cpx #$00
+    bne move_segments_loop
+
+move_first_seg:
+    lda PLAYER_ROW
+    sta segments
+    lda PLAYER_COL
+    sta segments+1
+
     rts
