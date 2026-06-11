@@ -85,6 +85,19 @@ init_player:
     lda #$0A
     sta PLAYER_ROW
     sta PLAYER_COL
+    sta segments+1
+    sta segments+3
+    sta segments+5
+
+    lda #3
+    sta segments_len
+    lda #$09
+    sta segments
+    lda #$08
+    sta segments+2
+    lda #$07
+    sta segments+4
+
     rts
 
 print_player:

@@ -1,5 +1,4 @@
 init_menu:
-   jsr clr_scr
    ldx #$4A
    ldy #$0A
    jsr PLOT
