@@ -46,7 +46,6 @@ start:
     sta TIMER_TICK
 
     jsr init_interrupts
-    jsr init_player
     jsr init_menu
 
 

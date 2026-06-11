@@ -1,4 +1,5 @@
 init_game:
+    jsr init_player
     jsr clr_scr
     jsr print_player
     jsr print_segments
@@ -295,7 +296,6 @@ death_test:
     bpl end_death_test
     lda #%00000000
     sta DEATH_FLAG
-    jsr init_player
     jsr init_game
     ; TODO
 end_death_test:
