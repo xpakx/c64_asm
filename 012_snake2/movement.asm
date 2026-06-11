@@ -56,6 +56,8 @@ move_right:
     inc PLAYER_COL
     rts
 end_move:
+    lda #%10000000
+    sta DEATH_FLAG
     rts
 
 
