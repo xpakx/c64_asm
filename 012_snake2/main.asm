@@ -98,6 +98,10 @@ init_player:
     lda #$07
     sta segments+4
 
+    lda #%00000001
+    sta direction
+    sta next_dir
+
     rts
 
 print_player:
