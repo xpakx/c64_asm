@@ -45,6 +45,8 @@ get_key:
 	jmp program_loop
 
 exit_prog:
+	lda #0
+	sta VIC_ENABLE
 	jsr clean_interrupts
 	jsr clr_scr
 	lda #WHITE
