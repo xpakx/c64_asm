@@ -1,4 +1,5 @@
 MENU_TIMER = $29
+MENU_COLOR = $30
 init_menu:
    ldx #$4A
    ldy #$0A
@@ -13,8 +14,10 @@ init_menu:
    sta STR_PTR+1
    jsr print_str
 
-   lda #7
+   lda #4
    sta MENU_TIMER
+   lda #BLACK
+   sta MENU_COLOR
    rts
 
 switch_to_game:
@@ -53,35 +56,27 @@ switch_to_menu:
 menu_logic:
     jsr get_rand
     dec MENU_TIMER
-    bne menu_logic_after_reset
-    lda #7
-
-    sta MENU_TIMER
-
-    ldx #$4A
-    ldy #$0A
-    clc
-    jsr PLOT
-
-    lda #BLACK
-    sta CUR_COLOR  
-
-    lda #<menu_msg
-    sta STR_PTR
-    lda #>menu_msg
-    sta STR_PTR+1
-    jsr print_str
-menu_logic_after_reset:
-    lda MENU_TIMER
-    cmp #6
     bne menu_logic_end
 
+    lda #4
+    sta MENU_TIMER
+
+    lda MENU_COLOR
+    cmp #WHITE
+    bne menu_logic_black
+    lda #BLACK
+    jmp menu_logic_color_set
+menu_logic_black:
+    lda #WHITE
+menu_logic_color_set:
+    sta CUR_COLOR  
+    sta MENU_COLOR  
+
     ldx #$4A
     ldy #$0A
     clc
     jsr PLOT
-    lda #WHITE
-    sta CUR_COLOR  
+
 
     lda #<menu_msg
     sta STR_PTR
