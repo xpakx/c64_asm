@@ -42,6 +42,9 @@ get_key:
         cmp #Q_KEY
         beq exit_prog
 
+	cmp #KEY_1
+	beq play_c
+
 	jmp program_loop
 
 exit_prog:
@@ -55,5 +58,19 @@ exit_prog:
 	lda #BLUE
 	sta BG_COLOR
         rts
+
+play_c:
+	lda #$20
+	sta V1_CTRL
+
+	lda #$65            
+	sta V1_FREQ_LO
+	lda #$11            
+	sta V1_FREQ_HI
+
+	lda #$21
+	sta V1_CTRL
+
+	jmp program_loop
 
 .include 'subroutines.asm'
