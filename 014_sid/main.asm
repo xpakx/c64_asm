@@ -21,6 +21,17 @@ start:
 	lda #BLACK
 	sta BG_COLOR
 
+init:
+	lda #$01
+        sta SID_VOL
+        
+        lda #$09
+        sta V1_AD
+        
+        lda #$00
+        sta V1_SR
+
+        ldy #$00
 
 program_loop:
 
@@ -34,6 +45,8 @@ get_key:
 	jmp program_loop
 
 exit_prog:
+        lda #$00
+        sta SID_VOL
 	jsr clr_scr
 	lda #WHITE
 	sta CUR_COLOR  
