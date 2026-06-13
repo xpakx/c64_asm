@@ -53,6 +53,7 @@ irq:
     lda #15
     sta TIMER_TICK
 
+.if DEBUG
     dec COUNTER
     lda COUNTER
 
@@ -60,7 +61,6 @@ irq:
     lda #9
     sta COUNTER
 update_digit:
-.if DEBUG
     clc
     adc #$30
     sta SCREEN
