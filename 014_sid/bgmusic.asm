@@ -11,7 +11,7 @@ V1_SR      = $D406
 SID_VOL    = $D418
 
 
-NOTE_DURATION = 255
+NOTE_DURATION = 24
 
 .include 'basic.asm'
 
@@ -38,15 +38,23 @@ init:
 	sta note_index
 	lda #$01
 	sta tick_counter
-	sta last_frame
+	sta frame_processed
 
 program_loop:
 	lda $D012
-	cmp last_frame
-	beq get_key
+	bne reset_poll_flag
+
+	lda frame_processed
+	bne get_key
     
-	sta last_frame
-	jsr play_background_music
+	lda #$01
+    	sta frame_processed
+    	jsr play_background_music
+    	jmp get_key
+
+reset_poll_flag:
+	lda #$00
+	sta frame_processed
 
 get_key:
         jsr GETIN
@@ -115,6 +123,6 @@ melody_lo:
 
 note_index:   .byte 0
 tick_counter: .byte 0
-last_frame:   .byte 0
+frame_processed:   .byte 0
 
 .include 'subroutines.asm'
