@@ -1,4 +1,4 @@
-.PHONY: run build run2 build2
+.PHONY: run build run2 build2 run3 build3
 
 build: program.prg
 
@@ -17,3 +17,13 @@ program2.prg: main2.asm
 
 run2: program2.prg
 	x64sc program2.prg
+
+	
+
+build3: program3.prg
+
+program3.prg: bgmusic.asm
+	64tass bgmusic.asm -o program3.prg
+
+run3: program3.prg
+	x64sc program3.prg
