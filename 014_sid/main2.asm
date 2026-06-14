@@ -28,7 +28,7 @@ init:
         lda #$09
         sta V1_AD
         
-        lda #$00
+        lda #$F0
         sta V1_SR
 
         ldy #$00
