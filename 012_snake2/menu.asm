@@ -16,7 +16,7 @@ init_menu:
 
    lda #4
    sta MENU_TIMER
-   lda #BLACK
+   lda #WHITE
    sta MENU_COLOR
    rts
 
