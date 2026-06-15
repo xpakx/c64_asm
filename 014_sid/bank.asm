@@ -11,7 +11,7 @@ V1_SR      = $D406
 SID_VOL    = $D418
 
 
-NOTE_DURATION = 24
+NOTE_DURATION = 50
 
 .include 'basic.asm'
 
@@ -31,7 +31,7 @@ init:
         lda #$09
         sta V1_AD
         
-        lda #$F0
+        lda #$80
         sta V1_SR
 
 	lda #$00
@@ -82,6 +82,8 @@ play_background_music:
 	dec tick_counter
 	lda tick_counter
 	bne music_done
+	lda #$20
+	sta V1_CTRL
 
 
 	ldx note_index
@@ -106,8 +108,6 @@ load_note:
 	lda note_bank_low, x
 	sta V1_FREQ_LO
 
-	lda #$20
-	sta V1_CTRL
 	lda #$21
 	sta V1_CTRL
 
