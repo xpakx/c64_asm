@@ -83,6 +83,7 @@ play_background_music:
 	lda tick_counter
 	bne music_done
 
+
 	ldx note_index
 
 	lda melody,x
@@ -91,11 +92,14 @@ play_background_music:
 
 	ldx #$00
 	stx note_index
-
 	lda melody,x
 
 load_note:
 	tax
+
+	clc
+	adc #$30
+	sta $0400
 
 	lda note_bank_high,x
 	sta V1_FREQ_HI
@@ -107,9 +111,7 @@ load_note:
 	lda #$21
 	sta V1_CTRL
 
-	ldx note_index
-	inx
-	stx note_index
+	inc note_index
 
 	lda #NOTE_DURATION
 	sta tick_counter
