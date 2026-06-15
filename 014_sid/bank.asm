@@ -84,15 +84,20 @@ play_background_music:
 	bne music_done
 
 	ldx note_index
-	lda note_bank_high, x
+
+	lda melody,x
 	cmp #$FF
 	bne load_note
 
 	ldx #$00
 	stx note_index
-	lda note_bank_high, x
+
+	lda melody,x
 
 load_note:
+	tax
+
+	lda note_bank_high,x
 	sta V1_FREQ_HI
 	lda note_bank_low, x
 	sta V1_FREQ_LO
@@ -102,6 +107,7 @@ load_note:
 	lda #$21
 	sta V1_CTRL
 
+	ldx note_index
 	inx
 	stx note_index
 
