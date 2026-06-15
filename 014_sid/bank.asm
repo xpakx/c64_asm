@@ -111,10 +111,14 @@ load_note:
 	lda #$21
 	sta V1_CTRL
 
-	inc note_index
 
-	lda #NOTE_DURATION
+	ldx note_index
+	lda melody_dur,x
+	tax
+	lda duration,x
 	sta tick_counter
+
+	inc note_index
 
 music_done:
 	rts
@@ -128,9 +132,14 @@ note_bank_high:
 note_bank_low:
     .byte $65, $88, $ED, $3B, $13, $45, $DA
 
+duration:
+    .byte 104, 52, 26, 13
+
 melody:
-    .byte 0, 0, 4, 4, 5, 4, 3, 3, 2, 2, 1, 1, 0
+    .byte 0, 0, 4, 4, 5, 5, 4, 3, 3, 2, 2, 1, 1, 0
     .byte $FF
+melody_dur:
+    .byte 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0
 
 note_index:   .byte 0
 tick_counter: .byte 0
