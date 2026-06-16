@@ -125,85 +125,85 @@ music_done:
 	rts
 
 init_interrupts:
-    sei
-    lda #%01111111
-    sta CIA1_ICR
+	sei
+	lda #%01111111
+	sta CIA1_ICR
 
-    and $D011
-    sta $D011
+	and $D011
+	sta $D011
 
-    lda CIA1_ICR
-    lda CIA2_ICR
+	lda CIA1_ICR
+	lda CIA2_ICR
     
-    lda #242
-    sta VIC_RASTER
+	lda #242
+	sta VIC_RASTER
 
-    lda VIC_CONTROL_1
-    and #%01111111
-    sta VIC_CONTROL_1
+	lda VIC_CONTROL_1
+	and #%01111111
+	sta VIC_CONTROL_1
 
-    lda #<irq
-    sta IRR_ADDR_LOW
-    lda #>irq
-    sta IRR_ADDR_HIGH
+	lda #<irq
+	sta IRR_ADDR_LOW
+	lda #>irq
+	sta IRR_ADDR_HIGH
 
-    lda #%00000001
-    sta VIC_IRM
+	lda #%00000001
+	sta VIC_IRM
     
-    cli
-    rts
+	cli
+	rts
 
 clean_interrupts:
-    sei
+	sei
     
-    lda #%00000000
-    sta vic_irm
+	lda #%00000000
+	sta VIC_IRM
     
-    lda #%10000001
-    sta cia1_icr
+	lda #%10000001
+	sta CIA1_ICR
     
-    lda #$31
-    sta irr_addr_low
-    lda #$ea
-    sta irr_addr_high
-
-    asl vic_irr
+    	lda #$31
+    	sta IRR_ADDR_LOW
+    	lda #$EA
+    	sta IRR_ADDR_HIGh
+	
+    	asl VIC_IRR
     
-    cli
-    rts
+    	cli
+    	rts
 
 irq:
-    dec TIMER_TICK
-    bne exit_irq
+    	dec TIMER_TICK
+    	bne exit_irq
 
-    lda #15
-    sta TIMER_TICK
+    	lda #15
+    	sta TIMER_TICK
 
-    lda #%10000000
-    sta FRAME_FLAG
+    	lda #%10000000
+    	sta FRAME_FLAG
 exit_irq:
-    asl VIC_IRR
-    jmp $EA31
+    	asl VIC_IRR
+    	jmp $EA31
 
 
 note_bank_high:
-          ;c    d    e    f    g    a    h
-    .byte $11, $13, $15, $17, $1A, $1D, $20
+	       ;c    d    e    f    g    a    h
+    	.byte $11, $13, $15, $17, $1A, $1D, $20
 
 note_bank_low:
-    .byte $65, $88, $ED, $3B, $13, $45, $DA
+	.byte $65, $88, $ED, $3B, $13, $45, $DA
 
 duration:
-    .byte 4, 2, 1
+	.byte 4, 2, 1
 
 melody:
-    .byte 0, 0, 4, 4, 5, 5, 4, 3, 3, 2, 2, 1, 1, 0
-    .byte 5, 5, 4, 4, 3, 3, 2, 5, 5, 4, 4, 3, 3, 2
-    .byte 0, 0, 4, 4, 5, 5, 4, 3, 3, 2, 2, 1, 1, 0
-    .byte $FF
+	.byte 0, 0, 4, 4, 5, 5, 4, 3, 3, 2, 2, 1, 1, 0
+	.byte 5, 5, 4, 4, 3, 3, 2, 5, 5, 4, 4, 3, 3, 2
+	.byte 0, 0, 4, 4, 5, 5, 4, 3, 3, 2, 2, 1, 1, 0
+	.byte $FF
 melody_dur:
-    .byte 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0
-    .byte 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0
-    .byte 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0
+	.byte 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0
+	.byte 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0
+	.byte 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0
 
 .include 'subroutines.asm'
