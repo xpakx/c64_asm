@@ -12,8 +12,8 @@ SID_VOL    = $D418
 
 
 NOTE_DURATION = 50
-TIMER_TICK = $01
 FRAME_FLAG = $02
+TIMER_TICK = $03
 
 .include 'basic.asm'
 
@@ -48,8 +48,11 @@ init:
 
 
 program_loop:
-
-
+	bit FRAME_FLAG
+	bpl get_key
+	jsr play_background_music
+	lda #0
+	sta FRAME_FLAG
 get_key:
         jsr GETIN
         beq program_loop
@@ -74,9 +77,6 @@ exit_prog:
         rts
 
 play_background_music:
-	dec tick_counter
-	lda tick_counter
-	bne music_done
 	lda #$20
 	sta V1_CTRL
 
@@ -177,7 +177,7 @@ irq:
     sta FRAME_FLAG
 exit_irq:
     asl VIC_IRR
-    jmp $ea31
+    jmp $EA31
 
 
 note_bank_high:
