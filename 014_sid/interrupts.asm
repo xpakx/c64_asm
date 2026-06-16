@@ -11,9 +11,9 @@ V1_SR      = $D406
 SID_VOL    = $D418
 
 
-NOTE_DURATION = 50
 FRAME_FLAG = $02
 TIMER_TICK = $03
+NOTE_DURATION = $04
 
 .include 'basic.asm'
 
@@ -45,6 +45,8 @@ init:
 	lda #0
 	sta FRAME_FLAG
 	jsr init_interrupts
+	lda #1
+	sta NOTE_DURATION
 
 
 program_loop:
@@ -77,6 +79,10 @@ exit_prog:
         rts
 
 play_background_music:
+	dec NOTE_DURATION
+	lda NOTE_DURATION
+	bne music_done
+
 	lda #$20
 	sta V1_CTRL
 
@@ -111,7 +117,7 @@ load_note:
 	lda melody_dur,x
 	tax
 	lda duration,x
-	sta tick_counter
+	sta NOTE_DURATION
 
 	inc note_index
 
@@ -188,7 +194,7 @@ note_bank_low:
     .byte $65, $88, $ED, $3B, $13, $45, $DA
 
 duration:
-    .byte 104, 52, 26, 13
+    .byte 4, 2, 1
 
 melody:
     .byte 0, 0, 4, 4, 5, 5, 4, 3, 3, 2, 2, 1, 1, 0
