@@ -14,6 +14,7 @@ SID_VOL    = $D418
 FRAME_FLAG = $02
 TIMER_TICK = $03
 NOTE_DURATION = $04
+NOTE_INDEX = $05
 
 .include 'basic.asm'
 
@@ -37,8 +38,7 @@ init:
         sta V1_SR
 
 	lda #$00
-	sta note_index
-	sta tick_counter
+	sta NOTE_INDEX
 
 	lda #15
 	sta TIMER_TICK
@@ -87,14 +87,14 @@ play_background_music:
 	sta V1_CTRL
 
 
-	ldx note_index
+	ldx NOTE_INDEX
 
 	lda melody,x
 	cmp #$FF
 	bne load_note
 
 	ldx #$00
-	stx note_index
+	stx NOTE_INDEX
 	lda melody,x
 
 load_note:
@@ -113,13 +113,13 @@ load_note:
 	sta V1_CTRL
 
 
-	ldx note_index
+	ldx NOTE_INDEX
 	lda melody_dur,x
 	tax
 	lda duration,x
 	sta NOTE_DURATION
 
-	inc note_index
+	inc NOTE_INDEX
 
 music_done:
 	rts
@@ -205,9 +205,5 @@ melody_dur:
     .byte 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0
     .byte 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0
     .byte 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0
-
-note_index:   .byte 0
-tick_counter: .byte 0
-frame_processed:   .byte 0
 
 .include 'subroutines.asm'
