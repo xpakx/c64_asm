@@ -47,3 +47,14 @@ program5.prg: interrupts.asm
 
 run5: program5.prg
 	x64sc program5.prg
+
+
+
+
+build6: program6.prg
+
+program6.prg: compressed.asm
+	64tass compressed.asm -o program6.prg
+
+run6: program6.prg
+	x64sc program6.prg
