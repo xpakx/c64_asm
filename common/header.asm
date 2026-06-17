@@ -50,6 +50,13 @@ CIA2_ICR       = $DD0D  ; CIA #2 interrupt control register
 IRR_ADDR_LOW   = $0314
 IRR_ADDR_HIGH  = $0315
 
+V1_FREQ_LO = $D400
+V1_FREQ_HI = $D401
+V1_CTRL    = $D404
+V1_AD      = $D405
+V1_SR      = $D406
+SID_VOL    = $D418
+
 ; ---------
 ; Colors
 ; ---------

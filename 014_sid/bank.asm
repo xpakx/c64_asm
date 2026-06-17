@@ -2,18 +2,9 @@
 ; Commodore 64 ASM
 ; ------------
 
-.include 'header.asm'
-V1_FREQ_LO = $D400
-V1_FREQ_HI = $D401
-V1_CTRL    = $D404
-V1_AD      = $D405
-V1_SR      = $D406
-SID_VOL    = $D418
-
-
+.include '../common/header.asm'
 NOTE_DURATION = 50
-
-.include 'basic.asm'
+.include '../common/basic.asm'
 
 *= $0810 
 
