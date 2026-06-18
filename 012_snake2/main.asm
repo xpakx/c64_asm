@@ -2,9 +2,9 @@
 ; Commodore 64 ASM - Snake
 ; ------------
 
-.include 'header.asm'
+.include '../common/header.asm'
 .include 'snake_header.asm'
-.include 'basic.asm'
+.include '../common/basic.asm'
 
 *= $0810 
 
