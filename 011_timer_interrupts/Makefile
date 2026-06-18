@@ -11,13 +11,13 @@ run: program.prg
 
 
 
-build2: chain.prg
+build2: raster_timer.prg
 
-chain.prg: *.asm
-	64tass chain.asm -o chain.prg
+raster_timer.prg: raster_timer.asm
+	64tass raster_timer.asm -o raster_timer.prg
 
-run2: chain.prg
-	x64sc chain.prg
+run2: raster_timer.prg
+	x64sc raster_timer.prg
 
 
 
