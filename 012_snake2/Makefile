@@ -1,15 +1,18 @@
 .PHONY: run build debug
 
-build: program.prg
+build: bin/program.prg
 
-program.prg: *.asm
-	64tass main.asm -o program.prg
+bin: 
+	mkdir -p bin
 
-run: program.prg
-	x64sc program.prg
+bin/program.prg: *.asm **/*.asm bin
+	64tass main.asm -o bin/program.prg
 
-program_debug.prg: *.asm
-	64tass -D DEBUG=1 main.asm -o program_debug.prg
+run: bin/program.prg
+	x64sc bin/program.prg
 
-debug: program_debug.prg
-	x64sc program_debug.prg
+bin/debug.prg: *.asm **/*.asm bin
+	64tass -D DEBUG=1 main.asm -o bin/debug.prg
+
+debug: bin/debug.prg
+	x64sc bin/debug.prg

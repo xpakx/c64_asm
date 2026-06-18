@@ -124,10 +124,10 @@ get_rand:
     rts
 
 
-.include 'movement.asm'
-.include 'menu.asm'
-.include 'subroutines.asm'
-.include 'interrupts.asm'
+.include 'scenes/movement.asm'
+.include 'scenes/menu.asm'
+.include 'utils/subroutines.asm'
+.include 'utils/interrupts.asm'
 
 seed:
     .byte $F5
