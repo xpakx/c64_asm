@@ -2,13 +2,13 @@
 ; Commodore 64 ASM - Raster Interrupt Version
 ; ------------
 
-.include 'header.asm'
+.include '../common/header.asm'
 COUNTER = $02
 TIMER_TICK = $03
 END_FLAG = $04
 SCREEN = $0400
 
-.include 'basic.asm'
+.include '../common/basic.asm'
 
 *= $0810 
 

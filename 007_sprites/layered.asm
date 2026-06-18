@@ -4,8 +4,8 @@
 ; layered sprites
 ; ----------------
 
-.include 'header.asm'
-.include 'basic.asm'
+.include '../common/header.asm'
+.include '../common/basic.asm'
 
 *= $0810 
 

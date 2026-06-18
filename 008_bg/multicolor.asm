@@ -2,7 +2,7 @@
 ; Commodore 64 ASM
 ; ------------
 
-.include 'header.asm'
+.include '../common/header.asm'
 SOURCE_LOW = $20
 SOURCE_HIGH = $21
 
@@ -12,7 +12,7 @@ COLOR_HIGH = $23
 DEST_LOW = $24
 DEST_HIGH = $25
 
-.include 'basic.asm'
+.include '../common/basic.asm'
 
 *= $0810 
 
