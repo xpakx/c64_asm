@@ -3,26 +3,7 @@
 ; ------------
 
 .include 'header.asm'
-COUNTER = $02
-TIMER_TICK = $03
-TEMP = $06
-SCREEN = $0400
-
-DEST_LOW = $20
-DEST_HIGH = $21
-PLAYER_ROW = $22
-PLAYER_COL = $23
-FRAME_FLAG = $24
-
-APPLE_ROW = $25
-APPLE_COL = $26
-GROW_FLAG = $27
-DEATH_FLAG = $28
-
-.weak
-DEBUG = 0
-.endweak
-
+.include 'snake_header.asm'
 .include 'basic.asm'
 
 *= $0810 
